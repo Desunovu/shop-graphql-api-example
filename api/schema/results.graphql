@@ -1,0 +1,11 @@
+type LoginResult{
+    status: Boolean!,
+    errors: [Error!]!,
+    token: String
+}
+
+type CreateUserResult {
+    status: Boolean!,
+    errors: [Error!]!,
+    user: User
+}

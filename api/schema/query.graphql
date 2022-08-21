@@ -5,8 +5,3 @@ type Query {
     ): LoginResult!
 }
 
-type LoginResult{
-    status: Boolean!,
-    errors: [Error!]!,
-    token: String
-}

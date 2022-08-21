@@ -6,8 +6,3 @@ type Mutation {
     ): CreateUserResult
 }
 
-type CreateUserResult {
-    status: Boolean!,
-    errors: [Error!]!,
-    user: User
-}
