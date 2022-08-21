@@ -1,0 +1,11 @@
+type User {
+    id: Int!,
+    name: String,
+    email: String,
+    role_id: Int
+}
+
+type Error {
+    code: Int!,
+    message: String
+}

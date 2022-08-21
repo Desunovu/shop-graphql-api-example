@@ -1,0 +1,13 @@
+type Mutation {
+    createUser(
+        name: String!,
+        email: String!,
+        password: String!
+    ): CreateUserResult
+}
+
+type CreateUserResult {
+    status: Boolean!,
+    errors: [Error!]!,
+    user: User
+}

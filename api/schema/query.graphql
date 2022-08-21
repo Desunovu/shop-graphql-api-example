@@ -1,0 +1,12 @@
+type Query {
+    loginUser(
+        email: String!
+        password: String!
+    ): LoginResult!
+}
+
+type LoginResult{
+    status: Boolean!,
+    errors: [Error!]!,
+    token: String
+}
