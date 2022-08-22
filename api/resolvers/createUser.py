@@ -1,11 +1,10 @@
 from werkzeug.security import generate_password_hash
 
-from api.resolvers.common.common import create_result, CUSTOMER_ROLE, USER_ALREADY_EXIST_ERROR
+from api.common.common import create_result, CUSTOMER_ROLE, USER_ALREADY_EXIST_ERROR
 from api.models import User, Role
 from api import db
 
 
-# TODO JWT token
 def resolve_create_user(obj, info, **kwargs):
     user = db.session.query(User).filter(User.email == kwargs["email"]).first()
     if user:

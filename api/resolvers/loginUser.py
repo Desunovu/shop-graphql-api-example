@@ -1,10 +1,9 @@
 import datetime
 
 import jwt
-from flask import request
 from werkzeug.security import check_password_hash
 
-from api.resolvers.common.common import create_result, WRONG_EMAIL_OR_PASSWORD_ERROR
+from api.common.common import create_result, WRONG_EMAIL_OR_PASSWORD_ERROR
 from api.models import User
 from api import app, db
 
