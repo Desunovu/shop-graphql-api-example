@@ -1,18 +1,21 @@
-from enum import Enum
-
-from api.common.common import create_error
+from .functions import create_error
 
 
-class RoleEnum(Enum):
+class Roles:
     ADMIN = "Admin"
     CUSTOMER = "Customer"
 
-    def __repr__(self):
-        return self.value
 
-
-class ErrorEnum(Enum):
+class Errors:
     ACCESS_DENIED = create_error(1, "Нет доступа")
     USER_ALREADY_EXISTS = create_error(2, "Пользователь уже существует")
     WRONG_EMAIL_OR_PASSWORD = create_error(3, "Неверный email или пароль")
     OBJECT_NOT_FOUND = create_error(4, "Данных по запросу не найдено")
+
+
+class UnauthorizedError(Exception):
+    extension = {"code": 401}
+
+
+class ForbiddenError(Exception):
+    extension = {"code": 403}

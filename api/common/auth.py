@@ -5,14 +5,13 @@ from flask import request, session
 
 from api import app, db
 from api.models import User
-from api.common.enum_types import RoleEnum
+from .classes import Roles, UnauthorizedError, ForbiddenError
 
 
-class UnauthorizedError(Exception):
-    extension = {"code": 401}
+def token_required(allowed_roles=None):
+    if allowed_roles is None:
+        allowed_roles = [Roles.CUSTOMER, Roles.ADMIN]
 
-
-def token_required(role=RoleEnum.CUSTOMER.value):
     def token_required_wrapper(func):
         @wraps(func)
         def decorated_view(*args, **kwargs):
@@ -32,7 +31,13 @@ def token_required(role=RoleEnum.CUSTOMER.value):
             if not current_user:
                 raise UnauthorizedError("Unauthorized")
 
+            # Проверка доступа роли
+            if not current_user.role in allowed_roles:
+                raise ForbiddenError("Forbidden")
+            
+            # Запись в сессию фласка
             session["current_user"] = current_user.to_dict()
+
             return func(*args, **kwargs)
 
         return decorated_view

@@ -1,21 +1,25 @@
 from flask import session
 
-from api.common.common import create_result
+from api.common.functions import create_result
 from api.common.auth import token_required
-from api.common.enum_types import ErrorEnum, RoleEnum
+from api.common import Errors, Roles
 from api.models import User
 from api import app, db
 
 
 @token_required()
 def resolve_get_user(_obj, _info, **kwargs):
-    user_id = session["current_user"]["id"]
     if "id" in kwargs:
-        user_id = kwargs["id"]
-        if session["current_user"]["role"] != RoleEnum.ADMIN.value:
-            return create_result(status=False, errors=[ErrorEnum.ACCESS_DENIED.value])
+        # Запрет пользователю делать запрос с аргументом
+        if session["current_user"]["role"] != Roles.ADMIN:
+            return create_result(status=False, errors=[Errors.ACCESS_DENIED])
 
-    user = db.session.query(User).get(user_id)
-    if not user:
-        return create_result(status=False, errors=[ErrorEnum.OBJECT_NOT_FOUND.value])
-    return create_result(user=user.to_dict())
+        user = db.session.query(User).get(kwargs["id"])
+        if not user:
+            return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])
+        return create_result(user=user.to_dict())
+
+    # Если аргумент не передан
+    return create_result(user=session["current_user"])
+
+
