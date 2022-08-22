@@ -1,8 +1,6 @@
 from flask import session
 
-from api.common.functions import create_result
-from api.common.auth import token_required
-from api.common import Errors, Roles
+from api.common import create_result, token_required, Errors, Roles
 from api.models import User
 from api import app, db
 

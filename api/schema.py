@@ -7,6 +7,7 @@ from api.resolvers import *
 query = ObjectType("Query")
 query.set_field("loginUser", resolve_login_user)
 query.set_field("getUser", resolve_get_user)
+query.set_field("getUsers", resolve_get_users)
 
 mutation = ObjectType("Mutation")
 mutation.set_field("createUser", resolve_create_user)

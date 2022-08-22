@@ -15,3 +15,9 @@ type GetUserResult {
     errors: [Error!]!,
     user: User
 }
+
+type GetUsersResult {
+    status: Boolean!,
+    errors: [Error!]!,
+    users: [User!]
+}
