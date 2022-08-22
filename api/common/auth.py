@@ -5,7 +5,7 @@ from flask import request
 
 from api import app, db
 from api.models import User, Role
-from api.resolvers.common.common import CUSTOMER_ACCESS_LEVEL
+from api.common.common import CUSTOMER_ACCESS_LEVEL
 
 
 # TODO переписать для резолверов
