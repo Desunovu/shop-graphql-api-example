@@ -9,3 +9,9 @@ type CreateUserResult {
     errors: [Error!]!,
     user: User
 }
+
+type GetUserResult {
+    status: Boolean!,
+    errors: [Error!]!,
+    user: User
+}

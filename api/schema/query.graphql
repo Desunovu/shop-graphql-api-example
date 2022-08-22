@@ -3,5 +3,7 @@ type Query {
         email: String!
         password: String!
     ): LoginResult!
+
+    getUser(id: Int): GetUserResult!
 }
 
