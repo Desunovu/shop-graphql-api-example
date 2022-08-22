@@ -1,7 +1,7 @@
 from functools import wraps
 
 import jwt
-from flask import request
+from flask import request, session
 
 from api import app, db
 from api.models import User
@@ -32,6 +32,7 @@ def token_required(role=RoleEnum.CUSTOMER.value):
             if not current_user:
                 raise UnauthorizedError("Unauthorized")
 
+            session["current_user"] = current_user.to_dict()
             return func(*args, **kwargs)
 
         return decorated_view
