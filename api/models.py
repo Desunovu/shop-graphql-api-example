@@ -19,15 +19,7 @@ class User(BaseMixin):
     name = Column(String, nullable=False)
     email = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
-    role_id = Column(Integer, ForeignKey("roles.id"), nullable=False)
-
-
-class Role(BaseMixin):
-    __tablename__ = "roles"
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False, unique=True)
-    access_level = Column(Integer, nullable=False, default=0)
+    role = Column(String)
 
 
 class Product(BaseMixin):

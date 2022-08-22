@@ -2,7 +2,7 @@ type User {
     id: Int!,
     name: String,
     email: String,
-    role_id: Int
+    role: String
 }
 
 type Error {
