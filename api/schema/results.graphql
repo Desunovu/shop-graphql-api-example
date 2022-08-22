@@ -4,19 +4,13 @@ type LoginResult{
     token: String
 }
 
-type CreateUserResult {
+type UserResult {
     status: Boolean!,
     errors: [Error!]!,
     user: User
 }
 
-type GetUserResult {
-    status: Boolean!,
-    errors: [Error!]!,
-    user: User
-}
-
-type GetUsersResult {
+type UsersResult {
     status: Boolean!,
     errors: [Error!]!,
     users: [User!]

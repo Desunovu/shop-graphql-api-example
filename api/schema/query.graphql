@@ -4,7 +4,7 @@ type Query {
         password: String!
     ): LoginResult!
 
-    getUser(id: Int): GetUserResult!
-    getUsers: GetUsersResult!
+    getUser(id: Int): UserResult!
+    getUsers: UsersResult!
 }
 

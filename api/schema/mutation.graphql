@@ -3,6 +3,6 @@ type Mutation {
         name: String!,
         email: String!,
         password: String!
-    ): CreateUserResult
+    ): UserResult
 }
 
