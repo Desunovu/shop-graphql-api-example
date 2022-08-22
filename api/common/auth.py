@@ -12,7 +12,6 @@ class UnauthorizedError(Exception):
     extension = {"code": 401}
 
 
-# TODO переписать для резолверов
 def token_required(role=RoleEnum.CUSTOMER.value):
     def token_required_wrapper(func):
         @wraps(func)
@@ -32,6 +31,8 @@ def token_required(role=RoleEnum.CUSTOMER.value):
             current_user = db.session.query(User).get(data['id'])
             if not current_user:
                 raise UnauthorizedError("Unauthorized")
+
+            return func(*args, **kwargs)
 
         return decorated_view
     return token_required_wrapper
