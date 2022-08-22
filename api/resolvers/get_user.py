@@ -9,7 +9,6 @@ from api import app, db
 
 @token_required()
 def resolve_get_user(_obj, _info, **kwargs):
-    print(session["current_user"])
     user_id = session["current_user"]["id"]
     if "id" in kwargs:
         user_id = kwargs["id"]
