@@ -12,6 +12,7 @@ type Mutation {
         description: String
     ): ProductResult
 
+    """Запрос для изменения товара"""
     updateProduct(
         id: Int!
         name: String

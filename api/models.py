@@ -9,7 +9,9 @@ class BaseMixin(db.Model):
         self.__dict__.update(kwargs)
 
     def update(self, **kwargs):
-        self.__dict__.update(kwargs)
+        for key, value in kwargs.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
 
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
