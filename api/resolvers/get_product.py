@@ -1,6 +1,6 @@
+from api import db
 from api.common import token_required, create_result, Errors
 from api.models import Product
-from api import db
 
 
 @token_required()

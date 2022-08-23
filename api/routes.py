@@ -1,6 +1,6 @@
-from flask import request, jsonify
 from ariadne import graphql_sync
 from ariadne.constants import PLAYGROUND_HTML
+from flask import request, jsonify
 
 from api import app
 from api.schema import schema

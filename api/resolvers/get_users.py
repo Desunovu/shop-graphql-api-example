@@ -1,6 +1,6 @@
-from api.common import create_result, token_required, Errors, Roles
+from api import db
+from api.common import create_result, token_required, Roles
 from api.models import User
-from api import app, db
 
 
 @token_required(allowed_roles=[Roles.ADMIN])

@@ -3,9 +3,9 @@ import datetime
 import jwt
 from werkzeug.security import check_password_hash
 
+from api import app, db
 from api.common import create_result, Errors
 from api.models import User
-from api import app, db
 
 
 def resolve_login_user(_obj, _info, email, password):

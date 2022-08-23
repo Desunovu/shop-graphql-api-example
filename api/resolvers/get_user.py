@@ -1,8 +1,8 @@
 from flask import session
 
+from api import db
 from api.common import create_result, token_required, Errors, Roles
 from api.models import User
-from api import app, db
 
 
 @token_required()

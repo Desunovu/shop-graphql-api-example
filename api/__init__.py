@@ -1,12 +1,9 @@
 import os
 
 import dotenv
-
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-
-from ariadne import ObjectType
+from flask_sqlalchemy import SQLAlchemy
 
 dotenv.load_dotenv()
 

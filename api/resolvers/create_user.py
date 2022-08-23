@@ -1,8 +1,8 @@
 from werkzeug.security import generate_password_hash
 
+from api import db
 from api.common import create_result, Errors, Roles
 from api.models import User
-from api import db
 
 
 def resolve_create_user(obj, info, **kwargs):
