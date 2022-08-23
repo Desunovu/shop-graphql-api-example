@@ -6,5 +6,8 @@ type Query {
 
     getUser(id: Int): UserResult!
     getUsers: UsersResult!
+
+    getProduct(id: Int!): ProductResult!
+    getProducts: ProductsResult!
 }
 

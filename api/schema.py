@@ -8,6 +8,8 @@ query = ObjectType("Query")
 query.set_field("loginUser", resolve_login_user)
 query.set_field("getUser", resolve_get_user)
 query.set_field("getUsers", resolve_get_users)
+query.set_field("getProduct", resolve_get_product)
+query.set_field("getProducts", resolve_get_products)
 
 mutation = ObjectType("Mutation")
 mutation.set_field("createUser", resolve_create_user)

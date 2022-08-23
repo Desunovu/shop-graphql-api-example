@@ -10,7 +10,7 @@ type Mutation {
         price: Int
         amount: Int
         description: String
-    ): ProductResult
+    ): ProductResult!
 
     """Запрос для изменения товара"""
     updateProduct(
@@ -19,8 +19,9 @@ type Mutation {
         price: Int
         amount: Int
         description: String
-    ): ProductResult
+    ): ProductResult!
 
-    deleteProduct(id: Int!): ProductResult
+    """Запрос для удаления товара"""
+    deleteProduct(id: Int!): ProductResult!
 }
 

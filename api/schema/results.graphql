@@ -26,3 +26,9 @@ type ProductResult {
     errors: [Error!]!
     product: Product
 }
+
+type ProductsResult {
+    status: Boolean!
+    errors: [Error!]!
+    products: [Product!]
+}
