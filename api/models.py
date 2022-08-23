@@ -27,9 +27,9 @@ class Product(BaseMixin):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    price = Column(Integer, nullable=False)
+    price = Column(Integer, default=0)
     amount = Column(Integer, default=0)
-    description = Column(String)
+    description = Column(String, default="Нет описания")
 
 
 class Category(BaseMixin):

@@ -11,11 +11,10 @@ query.set_field("getUsers", resolve_get_users)
 
 mutation = ObjectType("Mutation")
 mutation.set_field("createUser", resolve_create_user)
+mutation.set_field("addProduct", resolve_add_product)
 
 type_defs = load_schema_from_path(
     os.path.join(os.path.dirname(__file__), "schema")
 )
 
 schema = make_executable_schema(type_defs, query, mutation)
-
-# print(schema.type_map)

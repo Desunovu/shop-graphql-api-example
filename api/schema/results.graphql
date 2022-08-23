@@ -1,17 +1,28 @@
+type Result{
+    status: Boolean!
+    errors: [Error!]!
+}
+
 type LoginResult{
-    status: Boolean!,
-    errors: [Error!]!,
+    status: Boolean!
+    errors: [Error!]!
     token: String
 }
 
 type UserResult {
-    status: Boolean!,
-    errors: [Error!]!,
+    status: Boolean!
+    errors: [Error!]!
     user: User
 }
 
 type UsersResult {
-    status: Boolean!,
-    errors: [Error!]!,
+    status: Boolean!
+    errors: [Error!]!
     users: [User!]
+}
+
+type ProductResult {
+    status: Boolean!
+    errors: [Error!]!
+    product: Product
 }

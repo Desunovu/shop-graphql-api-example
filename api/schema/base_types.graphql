@@ -1,11 +1,19 @@
 type User {
-    id: Int!,
-    name: String,
-    email: String,
+    id: Int
+    name: String
+    email: String
     role: String
 }
 
+type Product {
+    id: Int
+    name: String
+    price: Int
+    amount: Int
+    description: String
+}
+
 type Error {
-    code: Int!,
+    code: Int
     message: String
 }

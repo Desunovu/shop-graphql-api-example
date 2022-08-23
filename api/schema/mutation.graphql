@@ -1,8 +1,25 @@
 type Mutation {
     createUser(
-        name: String!,
-        email: String!,
+        name: String!
+        email: String!
         password: String!
     ): UserResult
+
+    addProduct(
+        name: String!
+        price: Int
+        amount: Int
+        description: String
+    ): ProductResult
+
+    updateProduct(
+        id: Int!
+        name: String
+        price: Int
+        amount: Int
+        description: String
+    ): ProductResult
+
+    deleteProduct(id: Int!): ProductResult
 }
 
