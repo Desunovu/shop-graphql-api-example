@@ -7,8 +7,8 @@ class Roles:
 
 
 class Errors:
-    ACCESS_DENIED = create_error(1, "Нет доступа")
-    USER_ALREADY_EXISTS = create_error(2, "Пользователь уже существует")
+    ACCESS_DENIED = create_error(1, "Действие запрещено для вашей роли")
+    USER_ALREADY_EXISTS = create_error(2, "Пользователь с данным email уже существует")
     WRONG_EMAIL_OR_PASSWORD = create_error(3, "Неверный email или пароль")
     OBJECT_NOT_FOUND = create_error(4, "Данных по запросу не найдено")
 
