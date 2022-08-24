@@ -17,6 +17,7 @@ mutation.set_field("addProduct", resolve_add_product)
 mutation.set_field("updateProduct", resolve_update_product)
 mutation.set_field("deleteProduct", resolve_delete_product)
 mutation.set_field("assignAdmin", resolve_assign_admin)
+mutation.set_field("deleteUser", resolve_delete_user)
 
 type_defs = load_schema_from_path(
     os.path.join(os.path.dirname(__file__), "schema")

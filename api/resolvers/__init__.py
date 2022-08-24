@@ -2,6 +2,7 @@ from .add_product import resolve_add_product
 from .assign_admin import resolve_assign_admin
 from .create_user import resolve_create_user
 from .delete_product import resolve_delete_product
+from .delete_user import resolve_delete_user
 from .get_product import resolve_get_product
 from .get_products import resolve_get_products
 from .get_user import resolve_get_user

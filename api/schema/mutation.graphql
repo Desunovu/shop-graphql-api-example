@@ -26,5 +26,8 @@ type Mutation {
 
     """Запрос для назначения пользователю роли Админ"""
     assignAdmin(id: Int!): UserResult!
+
+    """Запрос для удаления пользователя"""
+    deleteUser(id: Int!): UserResult!
 }
 
