@@ -23,5 +23,8 @@ type Mutation {
 
     """Запрос для удаления товара"""
     deleteProduct(id: Int!): ProductResult!
+
+    """Запрос для назначения пользователю роли Админ"""
+    assignAdmin(id: Int!): UserResult!
 }
 
