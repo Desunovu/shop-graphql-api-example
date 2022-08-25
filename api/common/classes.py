@@ -12,6 +12,7 @@ class Errors:
     WRONG_EMAIL_OR_PASSWORD = create_error(3, "Неверный email или пароль")
     OBJECT_NOT_FOUND = create_error(4, "Данных по запросу не найдено")
     USER_ALREADY_HAS_ADMIN_ROLE = create_error(5, "Пользователь уже имеет роль Администратор")
+    CANT_ADD_MORE_PRODUCTS = create_error(6, "Нельзя добавить больше товаров")
 
 
 class UnauthorizedError(Exception):

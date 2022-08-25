@@ -32,3 +32,15 @@ type ProductsResult {
     errors: [Error!]!
     products: [Product!]
 }
+
+type CartResult {
+    status: Boolean!
+    errors: [Error!]!
+    cart: [CartLine!]
+}
+
+type CartLineResult {
+    status: Boolean!
+    errors: [Error!]!
+    cartline: CartLine
+}

@@ -9,5 +9,7 @@ type Query {
 
     getProduct(id: Int!): ProductResult!
     getProducts: ProductsResult!
+
+    getCart(id: Int): CartResult!
 }
 

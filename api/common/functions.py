@@ -5,6 +5,10 @@ def create_error(code=0, message="Нет доступа"):
     return dict_of(code, message)
 
 
+def create_simple_result(**kwargs):
+    return kwargs
+
+
 def create_result(status=True, errors=None, **kwargs):
     if errors is None:
         errors = []

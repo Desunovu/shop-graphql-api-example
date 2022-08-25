@@ -29,5 +29,11 @@ type Mutation {
 
     """Запрос для удаления пользователя"""
     deleteUser(id: Int!): UserResult!
+
+    """Запрос для добавления товара в корзину"""
+    addProductToCart(id: Int!): CartLineResult
+
+    """Запрос для удаления товара из корзины"""
+    removeOneProductFromCart(id: Int!): CartLineResult!
 }
 

@@ -50,17 +50,9 @@ class ProductCategory(BaseMixin):
     product_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"), primary_key=True)
     category_id = Column(Integer, ForeignKey("categories.id", ondelete="CASCADE"), primary_key=True)
 
-
-class Cart(BaseMixin):
-    __tablename__ = "carts"
-
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), unique=True)
-
-
 class CartLine(BaseMixin):
     __tablename__ = "cartlines"
     
-    cart_id = Column(Integer, ForeignKey("carts.id", ondelete="CASCADE"), primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)
     product_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"), primary_key=True)
     amount = Column(Integer, nullable=False, default=1)

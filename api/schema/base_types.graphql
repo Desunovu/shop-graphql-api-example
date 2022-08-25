@@ -13,6 +13,11 @@ type Product {
     description: String
 }
 
+type CartLine {
+    product: Product
+    amount: Int
+}
+
 type Error {
     code: Int
     message: String
