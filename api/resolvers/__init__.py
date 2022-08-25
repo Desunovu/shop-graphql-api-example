@@ -11,4 +11,4 @@ from .get_user import resolve_get_user
 from .get_users import resolve_get_users
 from .login_user import resolve_login_user
 from .update_product import resolve_update_product
-from .remove_one_product_from_cart import resolve_remove_one_product_from_cart
+from .remove_product_from_cart import resolve_remove_product_from_cart
