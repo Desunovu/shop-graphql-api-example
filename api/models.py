@@ -50,6 +50,7 @@ class ProductCategory(BaseMixin):
     product_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"), primary_key=True)
     category_id = Column(Integer, ForeignKey("categories.id", ondelete="CASCADE"), primary_key=True)
 
+
 class CartLine(BaseMixin):
     __tablename__ = "cartlines"
     

@@ -9,8 +9,14 @@ from api.models import User
 
 
 def resolve_login_user(_obj, _info, email, password):
+    """
+    Запрос авторизации пользователя
+    Возвращает
+        LoginResult!
+    """
     user = db.session.query(User).filter(User.email == email).first()
 
+    # Неверный Email или пароль
     if not (user and check_password_hash(user.password, password)):
         return create_result(status=False, errors=[Errors.WRONG_EMAIL_OR_PASSWORD])
 

@@ -10,3 +10,10 @@ def resolve_get_product(_obj, _info, **kwargs):
         return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])
 
     return create_result(product=product.to_dict())
+
+
+@token_required()
+def resolve_get_products(_obj, _info):
+    products = db.session.query(Product).all()
+
+    return create_result(products=[product.to_dict() for product in products])

@@ -6,6 +6,13 @@ from flask import session
 
 @token_required()
 def resolve_get_cart(_obj, _info, **kwargs):
+    """
+    Запрос получения корзины
+        Для администратора разрешено указать id для получения корзины любого пользователя
+        Для покупателя указывать id запрещено
+    Возвращает
+        LoginResult!
+    """
     user_id = session["current_user"]["id"]
     if "id" in kwargs:
         # Запрет пользователю делать запрос с аргументом
