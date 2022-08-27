@@ -5,6 +5,7 @@ type Mutation {
         password: String!
     ): UserResult
 
+    """Запрос для добавления товара"""
     addProduct(
         name: String!
         price: Int
@@ -24,6 +25,17 @@ type Mutation {
     """Запрос для удаления товара"""
     deleteProduct(id: Int!): ProductResult!
 
+    """Запрос для добавления изображений товару"""
+    addProductImages(
+        id:Int!
+        urls: [String!]!
+    ): Result!
+
+    """Запрос для удаления изображения товара"""
+    deleteProductImage(
+        image_id: Int!
+    ): Result!
+
     """Запрос для назначения пользователю роли Админ"""
     assignAdmin(id: Int!): UserResult!
 
@@ -31,7 +43,7 @@ type Mutation {
     deleteUser(id: Int!): UserResult!
 
     """Запрос для добавления товара в корзину"""
-    addProductToCart(id: Int!): CartLineResult
+    addProductToCart(id: Int!): CartLineResult!
 
     """Запрос для удаления товара из корзины"""
     removeProductFromCart(

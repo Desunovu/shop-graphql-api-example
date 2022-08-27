@@ -31,10 +31,10 @@ class Product(BaseMixin):
     __tablename__ = "products"
 
     id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False)
-    price = Column(Integer, default=0)
-    amount = Column(Integer, default=0)
-    description = Column(String, default="Нет описания")
+    name = Column(String, nullable=False, default="ProductName")
+    price = Column(Integer, nullable=False, default=0)
+    amount = Column(Integer, nullable=False, default=0)
+    description = Column(String, default="NoDescription")
 
 
 class Category(BaseMixin):
@@ -42,6 +42,14 @@ class Category(BaseMixin):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
+
+
+class ProductImage(BaseMixin):
+    __tablename__ = "product_images"
+
+    id = Column(Integer, primary_key=True)
+    product_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"))
+    image_url = Column(String, nullable=False)
 
 
 class ProductCategory(BaseMixin):

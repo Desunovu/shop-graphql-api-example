@@ -6,6 +6,12 @@ from flask import session
 
 @token_required()
 def resolve_add_product_to_cart(_obj, _info, **kwargs):
+    """
+    Запрос для добавления товара в корзину
+        Если в корзине есть строка с таким товаром, то увеличит количество
+    Возвращает
+        UserResult: dict
+    """
     product = db.session.query(Product).get([kwargs["id"]])
     if not product:
         return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])

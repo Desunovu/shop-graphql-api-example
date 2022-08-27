@@ -1,6 +1,6 @@
 from api import db
 from api.common import token_required, create_result, Roles, Errors
-from api.models import Product, User
+from api.models import Product, ProductImage, User
 
 
 @token_required(allowed_roles=[Roles.ADMIN])
@@ -48,6 +48,40 @@ def resolve_delete_product(_obj, _info, **kwargs):
     db.session.delete(product)
     db.session.commit()
     return create_result(product=product.to_dict())
+
+
+@token_required(allowed_roles=[Roles.ADMIN])
+def resolve_add_product_images(_obj, _info, **kwargs):
+    """
+    Админ-запрос для добавления изображений товару
+    Возвращает
+        ProductResult: dict
+    """
+    product = db.session.query(Product).get(kwargs["id"])
+    if not product:
+        return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])
+
+    for url in kwargs["urls"]:
+        db.session.add(ProductImage(product_id=kwargs["id"], image_url=url))
+
+    db.session.commit()
+    return create_result()
+
+
+@token_required(allowed_roles=[Roles.ADMIN])
+def resolve_delete_product_image(_obj, _info, **kwargs):
+    """
+    Админ-запрос для удаления изображения у товара
+    Возвращает
+        ProductResult: dict
+    """
+    product_image = db.session.query(ProductImage).get(kwargs["image_id"])
+    if not product_image:
+        return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])
+
+    db.session.delete(product_image)
+    db.session.commit()
+    return create_result()
 
 
 @token_required(allowed_roles=[Roles.ADMIN])
