@@ -1,4 +1,6 @@
-from api import db
+import os
+
+from api import app, db
 from api.common import token_required, create_result, Roles, Errors
 from api.models import Product, ProductImage, User
 
@@ -51,36 +53,42 @@ def resolve_delete_product(_obj, _info, **kwargs):
 
 
 @token_required(allowed_roles=[Roles.ADMIN])
-def resolve_add_product_images(_obj, _info, **kwargs):
+def resolve_upload_product_images(_obj, _info, **kwargs):
     """
-    Админ-запрос для добавления изображений товару
+    Админ-запрос для загрузки изображений товара
     Возвращает
         ProductResult: dict
     """
-    product = db.session.query(Product).get(kwargs["id"])
+    product = db.session.query(Product).get(kwargs.get("product_id"))
     if not product:
         return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])
 
-    for url in kwargs["urls"]:
-        db.session.add(ProductImage(product_id=kwargs["id"], image_url=url))
+    for file in kwargs["images"]:
+        product_image = ProductImage(product_id=product.id)
+        db.session.add(product_image)
+        db.session.commit()
+        filename = str(product_image.id) + ".jpeg"
+        file.save(os.path.join(app.config["APP_DIR"], app.config['UPLOAD_FOLDER'], filename))
 
-    db.session.commit()
     return create_result()
 
 
 @token_required(allowed_roles=[Roles.ADMIN])
-def resolve_delete_product_image(_obj, _info, **kwargs):
+def resolve_delete_product_images(_obj, _info, **kwargs):
     """
-    Админ-запрос для удаления изображения у товара
+    Админ-запрос для удаления изображений у товара
     Возвращает
         ProductResult: dict
     """
-    product_image = db.session.query(ProductImage).get(kwargs["image_id"])
-    if not product_image:
+    product = db.session.query(Product).get(kwargs.get("product_id"))
+    if not product:
         return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])
 
-    db.session.delete(product_image)
-    db.session.commit()
+    if kwargs.get("all"):
+        db.session.query(ProductImage).filter(ProductImage.product_id == product.id).delete()
+        db.session.commit()
+        return create_result()
+
     return create_result()
 
 

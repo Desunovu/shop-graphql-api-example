@@ -1,4 +1,6 @@
-from ariadne import graphql_sync
+import json
+
+from ariadne import graphql_sync, combine_multipart_data
 from ariadne.constants import PLAYGROUND_HTML
 from flask import request, jsonify
 
@@ -13,7 +15,15 @@ def graphql_playground():
 
 @app.route("/graphql", methods=["POST"])
 def graphql_server():
-    data = request.get_json()
+    if request.content_type.startswith("multipart/form-data"):
+        data = combine_multipart_data(
+            json.loads(request.form.get("operations")),
+            json.loads(request.form.get("map")),
+            dict(request.files)
+        )
+    else:
+        data = request.get_json()
+
     success, result = graphql_sync(
         schema,
         data,

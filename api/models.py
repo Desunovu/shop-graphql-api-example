@@ -49,7 +49,6 @@ class ProductImage(BaseMixin):
 
     id = Column(Integer, primary_key=True)
     product_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"))
-    image_url = Column(String, nullable=False)
 
 
 class ProductCategory(BaseMixin):

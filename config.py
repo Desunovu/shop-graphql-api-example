@@ -9,6 +9,8 @@ app_dir = os.path.abspath(os.path.dirname(__file__))
 
 class BaseConfig:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    APP_DIR = app_dir
+    UPLOAD_FOLDER = "img"
 
 
 class DevelopmentConfig(BaseConfig):
