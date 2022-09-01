@@ -3,6 +3,12 @@ type Result{
     errors: [Error!]!
 }
 
+type AddResult{
+    status: Boolean!
+    errors: [Error!]!
+    objectID: Int
+}
+
 type LoginResult{
     status: Boolean!
     errors: [Error!]!

@@ -1,4 +1,5 @@
 type Mutation {
+    """Запрос для регистрации пользователя"""
     createUser(
         name: String!
         email: String!
@@ -12,7 +13,7 @@ type Mutation {
         amount: Int
         description: String
         images: [Upload!]
-    ): ProductResult!
+    ): AddResult!
 
     """Запрос для изменения товара"""
     updateProduct(
@@ -21,23 +22,13 @@ type Mutation {
         price: Int
         amount: Int
         description: String
-    ): ProductResult!
+        newImages: [Upload!]
+        deleteImagesByID: [Int!]
+        deleteAllImages: Boolean
+    ): AddResult!
 
     """Запрос для удаления товара"""
-    deleteProduct(id: Int!): ProductResult!
-
-    """Запрос для загрузки изображений для товара"""
-    uploadProductImages(
-        product_id: Int!
-        images: [Upload!]!
-    ): ProductResult!
-
-    """Запрос для удаления изображений товара"""
-    deleteProductImages(
-        product_id: Int!
-        all: Boolean
-        images_id: [Int!]
-    ): Result!
+    deleteProduct(id: Int!): Result!
 
     """Запрос для назначения пользователю роли Админ"""
     assignAdmin(id: Int!): UserResult!
