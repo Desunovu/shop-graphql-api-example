@@ -1,5 +1,5 @@
 from api import db
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 
 
 class BaseMixin(db.Model):
@@ -49,6 +49,8 @@ class ProductImage(BaseMixin):
 
     id = Column(Integer, primary_key=True)
     product_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"))
+    image_name = Column(String, nullable=False)
+    is_preview = Column(Boolean, nullable=False, default=False)
 
 
 class ProductCategory(BaseMixin):
