@@ -21,7 +21,7 @@ def resolve_add_product(_obj, _info, **kwargs):
         if not status:
             return create_result(status=True, errors=[Errors.IMAGES_NOT_UPLOADED])
 
-    return create_result(objectID=product.id)
+    return create_result(product=product)
 
 
 @token_required(allowed_roles=[Roles.ADMIN])
@@ -53,7 +53,7 @@ def resolve_update_product(_obj, _info, **kwargs):
         if not status:
             errors.append(Errors.OBJECT_NOT_FOUND)
 
-    return create_result(errors=errors, objectID=kwargs["id"])
+    return create_result(errors=errors, product=product)
 
 
 @token_required(allowed_roles=[Roles.ADMIN])
@@ -69,26 +69,7 @@ def resolve_delete_product(_obj, _info, **kwargs):
 
     db.session.delete(product)
     db.session.commit()
-    return create_result(product=product.to_dict())
-
-
-@token_required(allowed_roles=[Roles.ADMIN])
-def resolve_delete_product_images(_obj, _info, **kwargs):
-    """
-    Админ-запрос для удаления изображений у товара
-    Возвращает
-        ProductResult: dict
-    """
-    product = db.session.query(Product).get(kwargs.get("product_id"))
-    if not product:
-        return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])
-
-    if kwargs.get("all"):
-        db.session.query(ProductImage).filter(ProductImage.product_id == product.id).delete()
-        db.session.commit()
-        return create_result()
-
-    return create_result()
+    return create_result(product=product)
 
 
 @token_required(allowed_roles=[Roles.ADMIN])

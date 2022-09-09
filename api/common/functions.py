@@ -1,8 +1,5 @@
-from sorcery import dict_of
-
-
 def create_error(code=0, message="Нет доступа"):
-    return dict_of(code, message)
+    return {"code": code, "message": message}
 
 
 def create_simple_result(**kwargs):
@@ -17,4 +14,3 @@ def create_result(status=True, errors=None, **kwargs):
         "errors": errors
     }
     return result | kwargs
-

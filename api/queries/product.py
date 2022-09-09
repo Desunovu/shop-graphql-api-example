@@ -9,11 +9,11 @@ def resolve_get_product(_obj, _info, **kwargs):
     if not product:
         return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])
 
-    return create_result(product=product.to_dict())
+    return create_result(product=product)
 
 
 @token_required()
 def resolve_get_products(_obj, _info):
     products = db.session.query(Product).all()
 
-    return create_result(products=[product.to_dict() for product in products])
+    return create_result(products=[product for product in products])

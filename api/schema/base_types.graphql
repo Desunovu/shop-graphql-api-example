@@ -4,6 +4,7 @@ type User {
     name: String
     email: String
     role: String
+    avatarUrl: String
 }
 
 """Карточка товара"""

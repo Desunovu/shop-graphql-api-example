@@ -35,8 +35,9 @@ def token_required(allowed_roles=None):
             if not current_user.role in allowed_roles:
                 raise ForbiddenError("Forbidden")
             
-            # Запись в сессию фласка
-            session["current_user"] = current_user.to_dict()
+            # Запись в сессию фласка / контекст ariadne
+            # session["current_user"] = current_user
+            args[1].context.current_user = current_user
 
             return func(*args, **kwargs)
 
