@@ -1,6 +1,6 @@
 import os
 
-from api import app, db
+from api import app, db, minio_client
 from api.models import ProductImage
 
 
@@ -11,13 +11,24 @@ def add_product_images(images: dict, product_id: int):
         db.session.add(product_image)
         db.session.commit()
 
-        # Сохранение в хранилище
-        # TODO проверка типа файла
+        # Сохранение в хранилище minio
+        # TODO проверка типа файла, проверка соединения/существования bucket
         file_ext = file.mimetype.split("/")[1]
         file_name = f"product_{product_id}_{product_image.id}.{file_ext}"  # product_1_15.png
-        file.save(os.path.join(app.config["APP_DIR"], app.config['UPLOAD_FOLDER'], file_name))
+        try:
+            minio_client.put_object(bucket_name=app.config.get("PRODUCTS_BUCKET"),
+                                    object_name=file_name,
+                                    data=file,
+                                    length=-1,
+                                    part_size=10*1024*1024)
+        # при ошибке удалить запись из БД
+        except Exception as ex:
+            print(f"--{ex}--")
+            db.session.delete(product_image)
+            db.session.commit()
+            return False
 
-        # Обновление имени в базе
+        # Обновление имени в базе после сохранения изображения
         product_image.image_name = file_name
         db.session.commit()
     return True
