@@ -13,3 +13,6 @@ venv/
 
 # PyCharm
 /.idea/
+
+# Test
+feature_test.py
