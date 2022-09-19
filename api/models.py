@@ -1,4 +1,5 @@
 from api import db
+from api.common.classes import Roles
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 
 
@@ -24,17 +25,17 @@ class User(BaseMixin):
     name = Column(String, nullable=False)
     email = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
-    role = Column(String)
+    role = Column(String, nullable=False, default=Roles.CUSTOMER)
 
 
 class Product(BaseMixin):
     __tablename__ = "products"
 
     id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False, default="ProductName")
+    name = Column(String, nullable=False, default="DefaultProductName")
     price = Column(Integer, nullable=False, default=0)
     amount = Column(Integer, nullable=False, default=0)
-    description = Column(String, default="NoDescription")
+    description = Column(String, nullable=False, default="DefaultDescription")
 
 
 class Category(BaseMixin):
