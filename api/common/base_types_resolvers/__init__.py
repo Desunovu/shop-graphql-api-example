@@ -15,6 +15,8 @@ product_type.set_field("name", product.resolve_product_name)
 product_type.set_field("price", product.resolve_product_price)
 product_type.set_field("amount", product.resolve_product_amount)
 product_type.set_field("description", product.resolve_product_description)
+product_type.set_field("images", product.resolve_product_images)
+product_type.set_field("categories", product.resolve_product_categories)
 
 cartline_type = ObjectType("CartLine")
 cartline_type.set_field("product", cartline.resolve_cartine_product)

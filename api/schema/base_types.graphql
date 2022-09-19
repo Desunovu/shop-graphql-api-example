@@ -14,6 +14,8 @@ type Product {
     price: Int
     amount: Int
     description: String
+    categories: [Category!]
+    images: [Image!]
 }
 
 type CartLine {
@@ -31,4 +33,10 @@ type Image {
     id: Int
     filename: String
     url: String
+    isPreview: Boolean
+}
+
+type Category {
+    id: Int
+    name: String
 }
