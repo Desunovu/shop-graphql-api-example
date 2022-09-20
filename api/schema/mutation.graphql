@@ -9,10 +9,11 @@ type Mutation {
     """Запрос для добавления товара"""
     addProduct(
         name: String!
-        price: Int
-        amount: Int
-        description: String
+        price: Int!
+        amount: Int!
+        description: String!
         images: [Upload!]
+        categoryIds: [Int!]!
     ): ProductResult!
 
     """Запрос для изменения товара"""
@@ -22,9 +23,12 @@ type Mutation {
         price: Int
         amount: Int
         description: String
-        newImages: [Upload!]
-        deleteImagesByID: [Int!]
+        addImages: [Upload!]
+        removeImagesById: [Int!]
         deleteAllImages: Boolean
+        addCategoriesById: [Int!]
+        removeCategoriesById: [Int!]
+        removeAllCategories: Boolean
     ): ProductResult!
 
     """Запрос для удаления товара"""

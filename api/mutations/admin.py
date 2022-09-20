@@ -2,13 +2,15 @@ import os
 
 from api import app, db
 from api.common import token_required, create_result, Roles, Errors
-from api.common.resolvers_help_functions import add_product_images, delete_product_images
-from api.models import Product, ProductImage, User, Category
+from api.common.resolvers_help_functions import add_product_images, delete_product_images, add_product_categories, remove_product_categories
+from api.models import Product, User, Category
 
 
 @token_required(allowed_roles=[Roles.ADMIN])
 def resolve_add_product(_obj, _info, **kwargs):
     """Админ-запрос для добавления товара"""
+    self_status = True  # Флаг безошибочности выполнения
+    errors = []
 
     # Создание записи в таблице products
     product = Product(**kwargs)
@@ -16,12 +18,18 @@ def resolve_add_product(_obj, _info, **kwargs):
     db.session.commit()
 
     # Добавление изображений
-    if kwargs.get("images"):
+    if "images" in kwargs:
         status = add_product_images(images=kwargs.get("images"), product_id=product.id)
         if not status:
-            return create_result(status=True, errors=[Errors.IMAGES_NOT_UPLOADED])
+            errors.append(Errors.IMAGES_NOT_UPLOADED)
 
-    return create_result(product=product)
+    # Добавление категорий
+    if "categoryIds" in kwargs:
+        status = add_product_categories(category_ids=kwargs.get("categoryIds"), product_id=product.id)
+        if not status:
+            errors.append(Errors.CATEGORIES_NOT_SET)
+
+    return create_result(status=self_status, errors=errors, product=product)
 
 
 @token_required(allowed_roles=[Roles.ADMIN])
@@ -38,20 +46,34 @@ def resolve_update_product(_obj, _info, **kwargs):
     db.session.commit()
 
     # Добавление изображений
-    if kwargs.get("newImages"):
-        status = add_product_images(images=kwargs.get("newImages"), product_id=product.id)
+    if kwargs.get("addImages"):
+        status = add_product_images(images=kwargs.get("addImages"), product_id=product.id)
         if not status:
             errors.append(Errors.IMAGES_NOT_UPLOADED)
 
     # Удаление изображений
-    if kwargs.get("deleteImagesByID"):
-        status = delete_product_images(product_id=product.id, images_id=kwargs["deleteImagesByID"])
+    if kwargs.get("removeImagesById"):
+        status = delete_product_images(product_id=product.id, images_id=kwargs["removeImagesById"])
         if not status:
             errors.append(Errors.OBJECT_NOT_FOUND)
     if kwargs.get("deleteAllImages"):
         status = delete_product_images(product_id=product.id, delete_all=True)
         if not status:
             errors.append(Errors.OBJECT_NOT_FOUND)
+
+    # Добавление/удаление категорий
+    if "addCategoriesById" in kwargs:
+        status = add_product_categories(category_ids=kwargs.get("addCategoriesById"), product_id=product.id)
+        if not status:
+            errors.append(Errors.CATEGORIES_NOT_SET)
+    if "removeCategoriesById" in kwargs:
+        status = remove_product_categories(category_ids=kwargs.get("removeCategoriesById"), product_id=product.id)
+        if not status:
+            errors.append(Errors.CATEGORIES_NOT_REMOVED)
+    if "removeAllCategories" in kwargs:
+        status = remove_product_categories(product_id=product.id, remove_all=True)
+        if not status:
+            errors.append(Errors.CATEGORIES_NOT_REMOVED)
 
     return create_result(errors=errors, product=product)
 
@@ -60,9 +82,10 @@ def resolve_update_product(_obj, _info, **kwargs):
 def resolve_delete_product(_obj, _info, **kwargs):
     """
     Админ-запрос для удаления товара
-    Возвращает
-        ProductResult: dict
+    Возвращает ProductResult
     """
+    # TODO удаление изображений
+    # TODO удаление категорий
     product = db.session.query(Product).get(kwargs["id"])
     if not product:
         return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])

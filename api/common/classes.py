@@ -13,7 +13,9 @@ class Errors:
     OBJECT_NOT_FOUND = create_error(4, "Данных по запросу не найдено")
     USER_ALREADY_HAS_ADMIN_ROLE = create_error(5, "Пользователь уже имеет роль Администратор")
     CANT_ADD_MORE_PRODUCTS = create_error(6, "Нельзя добавить больше товаров")
-    IMAGES_NOT_UPLOADED = create_error(7, "При загрузке изображений произошла ошибка")
+    IMAGES_NOT_UPLOADED = create_error(7, "При загрузке изображений товара произошла ошибка")
+    CATEGORIES_NOT_SET = create_error(8, "При задании категорий товара произошла ошибка")
+    CATEGORIES_NOT_REMOVED = create_error(8, "При удалении категорий товара произошла ошибка")
 
 
 class UnauthorizedError(Exception):

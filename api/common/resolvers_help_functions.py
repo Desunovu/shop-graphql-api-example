@@ -1,7 +1,7 @@
 import os
 from minio.deleteobjects import DeleteObject
 from api import app, db, minio_client
-from api.models import ProductImage
+from api.models import ProductImage, ProductCategory
 
 bucket_name = app.config.get("PRODUCTS_BUCKET")
 
@@ -56,3 +56,33 @@ def delete_product_images(product_id: int, images_id=None, delete_all=False):
     db.session.commit()
 
     return True
+
+
+def add_product_categories(product_id, category_ids=None):
+    try:
+        product_categories = [ProductCategory(product_id=product_id, category_id=category_id) for category_id in category_ids]
+        db.session.bulk_save_objects(product_categories)
+        db.session.commit()
+        return True
+    except Exception:
+        db.session.rollback()
+        return False
+
+
+def remove_product_categories(product_id, category_ids=None, remove_all=False,):
+    # Выражение для запроса
+    if remove_all:
+        stmt = db.session.query(ProductCategory).filter(ProductCategory.product_id == product_id)
+    else:
+        stmt = db.session.query(ProductCategory).filter(
+            ProductCategory.product_id == product_id,
+            ProductCategory.category_id.in_(category_ids)
+        )
+
+    # Удаление записей в БД
+    try:
+        stmt.delete()
+        db.session.commit()
+        return True
+    except Exception:
+        return False
