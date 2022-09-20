@@ -45,5 +45,11 @@ type Mutation {
         amount: Int
         all: Boolean
     ): CartLineResult!
+
+    """Создание категории"""
+    addCategory(name: String!): CategoryResult!
+
+    """Удаление категории"""
+    removeCategory(id: Int!): Result!
 }
 

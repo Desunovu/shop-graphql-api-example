@@ -3,7 +3,7 @@ import os
 from api import app, db
 from api.common import token_required, create_result, Roles, Errors
 from api.common.resolvers_help_functions import add_product_images, delete_product_images
-from api.models import Product, ProductImage, User
+from api.models import Product, ProductImage, User, Category
 
 
 @token_required(allowed_roles=[Roles.ADMIN])
@@ -107,3 +107,22 @@ def resolve_delete_user(_obj, _info, **kwargs):
     db.session.delete(user)
     db.session.commit()
     return create_result(user=user.to_dict())
+
+
+@token_required(allowed_roles=[Roles.ADMIN])
+def resolve_add_category(_obj, _info, **kwargs):
+    """Админ-запрос для добавления категории"""
+    category_name = kwargs.get("name")
+    category = Category(name=category_name)
+    db.session.add(category)
+    db.session.commit()
+    return create_result(category=category)
+
+
+@token_required(allowed_roles=[Roles.ADMIN])
+def resolve_remove_category(_obj, _info, **kwargs):
+    """Админ-запрос для удаления категории"""
+    category = db.session.query(Category).get(kwargs["id"])
+    db.session.delete(category)
+    db.session.commit()
+    return create_result()

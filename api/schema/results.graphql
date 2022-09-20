@@ -44,3 +44,9 @@ type CartLineResult {
     errors: [Error!]!
     cartline: CartLine
 }
+
+type CategoryResult {
+    status: Boolean!
+    errors: [Error!]!
+    category: Category
+}

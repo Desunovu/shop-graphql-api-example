@@ -1,6 +1,6 @@
 from ariadne import ObjectType
 
-from . import user, product, cartline
+from . import user, product, cartline, category
 
 user_type = ObjectType("User")
 user_type.set_field("id", user.resolve_user_id)
@@ -21,3 +21,7 @@ product_type.set_field("categories", product.resolve_product_categories)
 cartline_type = ObjectType("CartLine")
 cartline_type.set_field("product", cartline.resolve_cartine_product)
 cartline_type.set_field("amount", cartline.resolve_cartline_amount)
+
+category_type = ObjectType("Category")
+category_type.set_field("id", category.resolve_category_id)
+category_type.set_field("name", category.resolve_category_name)

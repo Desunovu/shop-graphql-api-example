@@ -10,6 +10,8 @@ mutation.set_field("updateProduct", admin.resolve_update_product)
 mutation.set_field("deleteProduct", admin.resolve_delete_product)
 mutation.set_field("assignAdmin", admin.resolve_assign_admin)
 mutation.set_field("deleteUser", admin.resolve_delete_user)
+mutation.set_field("addCategory", admin.resolve_add_category)
+mutation.set_field("removeCategory", admin.resolve_remove_category)
 
 # Signup
 mutation.set_field("createUser", signup.resolve_create_user)
