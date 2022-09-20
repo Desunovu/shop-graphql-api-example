@@ -1,15 +1,21 @@
 type Query {
+    """"Sign in"""
     loginUser(
         email: String!
         password: String!
     ): LoginResult!
 
+    """Получить пользователя (любого для админа)"""
     getUser(id: Int): UserResult!
+    """Получить пользователей"""
     getUsers: UsersResult!
 
     getProduct(id: Int!): ProductResult!
     getProducts: ProductsResult!
 
     getCart(id: Int): CartResult!
+
+    """Получить список категорий"""
+    getCategories: CategoriesResult!
 }
 

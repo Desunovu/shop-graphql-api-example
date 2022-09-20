@@ -50,3 +50,9 @@ type CategoryResult {
     errors: [Error!]!
     category: Category
 }
+
+type CategoriesResult {
+    status: Boolean!
+    errors: [Error!]!
+    categories: [Category!]
+}
