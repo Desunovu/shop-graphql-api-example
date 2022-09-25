@@ -5,13 +5,15 @@ type Query {
         password: String!
     ): LoginResult!
 
-    """Получить пользователя (любого для админа)"""
+    """Получить пользователя (по ID для админа)"""
     getUser(id: Int): UserResult!
     """Получить пользователей"""
     getUsers: UsersResult!
 
+    "Получить товар по ID"
     getProduct(id: Int!): ProductResult!
-    getProducts: ProductsResult!
+    "Получить товары"
+    getProducts(input: GetProductsInput): ProductsResult!
 
     getCart(id: Int): CartResult!
 

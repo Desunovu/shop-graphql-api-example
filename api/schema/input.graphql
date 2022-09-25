@@ -1,0 +1,7 @@
+input GetProductsFilters {
+    categoryId: Int
+}
+
+input GetProductsInput {
+    filter: GetProductsFilters
+}
