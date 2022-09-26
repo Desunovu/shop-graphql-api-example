@@ -1,7 +1,7 @@
 from api import db
-from api.extras import token_required, create_result, create_simple_result, Errors, Roles
+from api.extras import token_required, create_result, Errors, Roles
+from api.extras.resolver_utils import get_cart_total
 from api.models import User, CartLine, Product
-from flask import session
 
 
 @token_required()
@@ -18,6 +18,7 @@ def resolve_get_cart(_obj, info, **kwargs):
             return create_result(status=False, errors=[Errors.ACCESS_DENIED])
         user_id = kwargs["id"]
 
-    cartline_product_list = db.session.query(CartLine, Product).join(Product).join(User).filter(User.id == user_id).all()
+    cartline_and_product_list = db.session.query(CartLine, Product).\
+        join(Product).join(User).filter(User.id == user_id).all()
 
-    return create_result(cart=cartline_product_list)
+    return create_result(cart=cartline_and_product_list, cartTotal=get_cart_total(cartline_and_product_list))

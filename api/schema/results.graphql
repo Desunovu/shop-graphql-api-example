@@ -37,6 +37,7 @@ type CartResult {
     status: Boolean!
     errors: [Error!]!
     cart: [CartLine!]
+    cartTotal: Int
 }
 
 type CartLineResult {
