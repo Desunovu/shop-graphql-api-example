@@ -1,7 +1,7 @@
 from werkzeug.security import generate_password_hash
 
 from api import db
-from api.common import create_result, Errors, Roles
+from api.extras import create_result, Errors, Roles
 from api.models import User
 
 

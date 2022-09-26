@@ -1,5 +1,5 @@
 from api import db
-from api.common import token_required, create_result, Errors
+from api.extras import token_required, create_result, Errors
 from api.models import Product, ProductCategory
 
 

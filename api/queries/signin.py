@@ -4,7 +4,7 @@ import jwt
 from werkzeug.security import check_password_hash
 
 from api import app, db
-from api.common import create_result, Errors
+from api.extras import create_result, Errors
 from api.models import User
 
 

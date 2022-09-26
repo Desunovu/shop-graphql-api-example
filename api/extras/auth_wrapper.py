@@ -5,7 +5,7 @@ from flask import request, session
 
 from api import app, db
 from api.models import User
-from .classes import Roles, UnauthorizedError, ForbiddenError
+from .common_constants import Roles, UnauthorizedError, ForbiddenError
 
 
 def token_required(allowed_roles=None):

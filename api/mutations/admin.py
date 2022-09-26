@@ -1,8 +1,8 @@
 import os
 
 from api import app, db
-from api.common import token_required, create_result, Roles, Errors
-from api.common.resolvers_help_functions import add_product_images, delete_product_images, add_product_categories, remove_product_categories
+from api.extras import token_required, create_result, Roles, Errors
+from api.extras.resolver_utils import add_product_images, delete_product_images, add_product_categories, remove_product_categories
 from api.models import Product, User, Category
 
 

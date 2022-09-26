@@ -1,6 +1,6 @@
 # В resolver верхнего уровня возвращается api.models.Product
 
-from api.common import create_simple_result
+from api.extras import create_simple_result
 from api import db
 from api.models import Category, ProductImage, ProductCategory
 

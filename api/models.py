@@ -1,5 +1,5 @@
 from api import db
-from api.common.classes import Roles
+from api.extras.common_constants import Roles
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 
 
