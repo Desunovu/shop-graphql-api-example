@@ -67,3 +67,13 @@ class CartLine(BaseMixin):
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)
     product_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"), primary_key=True)
     amount = Column(Integer, nullable=False, default=1)
+
+
+class Review(BaseMixin):
+    __tablename__ = "reviews"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="SET NULL"))
+    product_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"))
+    rating = Column(Integer, nullable=False, default=5)
+    text = Column(String)

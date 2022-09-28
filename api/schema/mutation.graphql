@@ -55,5 +55,15 @@ type Mutation {
 
     """Удаление категории"""
     removeCategory(id: Int!): Result!
+
+    """Оставить/обновить отзыв"""
+    addReview(
+        productId: Int! = 1
+        rating: Int! = 5
+        text: String = Null
+    ): ReviewResult!
+
+    """Удалить отзыв"""
+    removeReview(id: Int! = 1): Result!
 }
 

@@ -57,3 +57,9 @@ type CategoriesResult {
     errors: [Error!]!
     categories: [Category!]
 }
+
+type ReviewResult {
+    status: Boolean!
+    errors: [Error!]!
+    review: Review
+}

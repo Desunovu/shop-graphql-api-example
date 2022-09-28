@@ -16,13 +16,16 @@ type Product {
     description: String
     categories: [Category!]
     images: [Image!]
+    reviews: [Review!]
 }
 
+"""Строка с товаром в корзине"""
 type CartLine {
     product: Product
     amount: Int
 }
 
+"""Ошибка"""
 type Error {
     code: Int
     message: String
@@ -36,7 +39,17 @@ type Image {
     isPreview: Boolean
 }
 
+"""Категория товара"""
 type Category {
     id: Int
     name: String
+}
+
+"""Отзыв на товар"""
+type Review {
+    id: Int
+    userId: Int
+    productId: Int
+    rating: Int
+    text: String
 }

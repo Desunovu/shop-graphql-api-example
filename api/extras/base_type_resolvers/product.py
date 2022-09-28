@@ -2,7 +2,7 @@
 
 from api.extras import create_simple_result
 from api import db
-from api.models import Category, ProductImage, ProductCategory
+from api.models import Category, ProductImage, ProductCategory, Review
 
 
 def resolve_product_id(product_obj, _info):
@@ -49,3 +49,9 @@ def resolve_product_images(product_obj, _info):
                 url="TEST FUNC",
                 isPreview=image.is_preview
             ) for image in images]
+
+
+def resolve_product_reviews(product_obj, _info):
+    reviews = db.session.query(Review).filter(Review.product_id == product_obj.id).all()
+
+    return reviews
