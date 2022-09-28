@@ -2,10 +2,11 @@
 A simple example of an application developed on Flask. Uses PostgreSQL, SQLAlchemy, Ariadne (GraphQL), Minio file storage.
 
 # Features
-1. Front-end queries
-2. Store administration (create product, category, upload images and etc)
-3. Client sign up/sign in
-4. Shopping cart managment
+1. Client sign up/sign in
+2. Results of queries/mutations for Front-end
+3. Store administration (create product, category, upload images and etc)
+4. Shopping cart usage (add/remove allowed products)
+5. Products reviews
 
 # GraphQL Schema
 updated 20th September 2022
