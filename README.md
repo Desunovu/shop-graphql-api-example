@@ -8,6 +8,12 @@ A simple example of an application developed on Flask. Uses PostgreSQL, SQLAlche
 4. Shopping cart usage (add/remove allowed products)
 5. Products reviews
 
+# Project structure
+Coming soon
+
+# Local preview
+Coming soon
+
 # GraphQL Schema
 updated 20th September 2022
 
