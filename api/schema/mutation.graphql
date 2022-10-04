@@ -38,7 +38,7 @@ type Mutation {
     assignAdmin(id: Int!): UserResult!
 
     """Запрос для удаления пользователя"""
-    deleteUser(id: Int!): UserResult!
+    deleteUser(id: Int!): Result!
 
     """Запрос для добавления товара в корзину"""
     addProductToCart(id: Int!, amount: Int): CartLineResult!
@@ -65,5 +65,11 @@ type Mutation {
 
     """Удалить отзыв"""
     removeReview(id: Int! = 1): Result!
+
+    """Создать заказ [Пользователь]"""
+    createOrder: OrderResult!
+
+    """Закрыть заказ [Администратор]"""
+    closeOrder(id: Int): Result!
 }
 

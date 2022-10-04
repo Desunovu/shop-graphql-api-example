@@ -19,5 +19,8 @@ type Query {
 
     """Получить список категорий"""
     getCategories: CategoriesResult!
-}
 
+    """Получить все заказы (по userId для админа)"""
+    getOrders(userId: Int): OrdersResult!
+
+}

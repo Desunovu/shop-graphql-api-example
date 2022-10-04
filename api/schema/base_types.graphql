@@ -53,3 +53,19 @@ type Review {
     rating: Int
     text: String
 }
+
+"""Строка заказа"""
+type OrderLine {
+    product: Product
+    amount: Int
+}
+
+"""Заказ"""
+type Order {
+    id: Int
+    userId: Int
+    date: Date
+    deliveryAddress: String
+    completed: Boolean
+    orderLines: [OrderLine!]
+}

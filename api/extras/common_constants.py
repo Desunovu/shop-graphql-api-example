@@ -16,6 +16,10 @@ class Errors:
     IMAGES_NOT_UPLOADED = create_error(7, "При загрузке изображений товара произошла ошибка")
     CATEGORIES_NOT_SET = create_error(8, "При задании категорий товара произошла ошибка")
     CATEGORIES_NOT_REMOVED = create_error(8, "При удалении категорий товара произошла ошибка")
+    NO_PRODUCTS_IN_CART = create_error(9, "Корзина пользователя пуста")
+    NOT_ENOUGH_PRODUCT = create_error(10, "Некоторые товары недоступны для заказа в количестве, указанном в корзине. "
+                                          "Проверьте отредактированную корзину и выполните заказ еще раз.")
+    ORDER_CREATION_EXCEPTION = create_error(11, "Ошибка при переносе товара в заказ")
 
 
 class UnauthorizedError(Exception):
@@ -24,3 +28,9 @@ class UnauthorizedError(Exception):
 
 class ForbiddenError(Exception):
     extension = {"code": 403}
+
+
+class NotEnoughProduct(Exception):
+    def __init__(self, message="В корзине товара больше чем доступно для покупки"):
+        self.message = message
+        super().__init__(self.message)

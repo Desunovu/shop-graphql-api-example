@@ -63,3 +63,15 @@ type ReviewResult {
     errors: [Error!]!
     review: Review
 }
+
+type OrderResult {
+    status: Boolean!
+    errors: [Error!]!
+    order: Order
+}
+
+type OrdersResult {
+    status: Boolean!
+    errors: [Error!]!
+    orders: [Order!]
+}

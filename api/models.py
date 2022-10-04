@@ -1,6 +1,6 @@
 from api import db
 from api.extras.common_constants import Roles
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, Date, ForeignKey
 
 
 class BaseMixin(db.Model):
@@ -77,3 +77,22 @@ class Review(BaseMixin):
     product_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"))
     rating = Column(Integer, nullable=False, default=5)
     text = Column(String)
+
+
+class Order(BaseMixin):
+    __tablename__ = "orders"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="SET NULL"))
+    date = Column(Date, nullable=False)
+    delivery_address = Column(String, nullable=False)
+    completed = Column(Boolean, nullable=False, default=False)
+
+
+class OrderLine(BaseMixin):
+    __tablename__ = "orderlines"
+
+    order_id = Column(Integer, ForeignKey("orders.id", ondelete="CASCADE"), primary_key=True)
+    product_id = Column(Integer, ForeignKey("products.id", ondelete="SET NULL"), primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
+    amount = Column(Integer, nullable=False)
