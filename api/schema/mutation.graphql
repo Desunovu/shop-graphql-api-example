@@ -1,9 +1,21 @@
 type Mutation {
     """Запрос для регистрации пользователя"""
     createUser(
-        name: String!
-        email: String!
-        password: String!
+        email: String! = "test@email.com"
+        password: String! = "password"
+        firstName: String
+        lastName: String
+        address: String
+    ): UserResult!
+
+    """Запрос для изменения пользователя (по id для администратора)"""
+    updateUser(
+        id: String
+        email: String
+        password: String
+        firstName: String
+        lastName: String
+        address: String
     ): UserResult!
 
     """Запрос для добавления товара"""
@@ -67,7 +79,9 @@ type Mutation {
     removeReview(id: Int! = 1): Result!
 
     """Создать заказ [Пользователь]"""
-    createOrder: OrderResult!
+    createOrder(
+        deliveryAddress: String
+    ): OrderResult!
 
     """Закрыть заказ [Администратор]"""
     closeOrder(id: Int): Result!
