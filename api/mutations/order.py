@@ -28,13 +28,16 @@ def resolve_create_order(_obj, info, **kwargs):
     new_order = Order(
         user_id=info.context.current_user.id,
         date=datetime.date.today(),
-        delivery_address="TEST",
         completed=False
     )
+    new_order.delivery_address = info.context.current_user.address
+    if "deliveryAddress" in kwargs:
+        new_order.delivery_address = kwargs["deliveryAddress"]
     db.session.add(new_order)
     db.session.commit()
 
     # Перенос в таблицу orderlines
+    # Откат записи в orders и orderlines если произошла ошибка переноса
     try:
         orderlines = db.session.add_all(
             [OrderLine(**cartline.to_dict(), order_id=new_order.id) for cartline in cartlines]

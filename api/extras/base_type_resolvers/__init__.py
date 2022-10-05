@@ -4,10 +4,12 @@ from . import user, product, cartline, category, review, order, orderline
 
 user_type = ObjectType("User")
 user_type.set_field("id", user.resolve_user_id)
-user_type.set_field("name", user.resolve_user_name)
 user_type.set_field("email", user.resolve_user_email)
 user_type.set_field("role", user.resolve_user_role)
-user_type.set_field("avatarUrl", user.resolve_avatar_url)
+user_type.set_field("avatarUrl", user.resolve_user_avatar_url)
+user_type.set_field("firstName", user.resolve_user_first_name)
+user_type.set_field("lastName", user.resolve_user_last_name)
+user_type.set_field("address", user.resolve_user_address)
 
 product_type = ObjectType("Product")
 product_type.set_field("id", product.resolve_product_id)

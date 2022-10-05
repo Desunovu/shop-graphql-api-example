@@ -1,10 +1,12 @@
 """Пользователь"""
 type User {
     id: Int
-    name: String
     email: String
     role: String
     avatarUrl: String
+    firstName: String
+    lastName: String
+    address: String
 }
 
 """Карточка товара"""
