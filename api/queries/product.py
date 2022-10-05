@@ -27,7 +27,5 @@ def resolve_get_products(_obj, _info, **kwargs):
 
     # Поиск в БД
     products = stmt.all()
-    if not products:
-        return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])
 
     return create_result(products=[product for product in products])
