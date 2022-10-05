@@ -38,6 +38,7 @@ class Product(BaseMixin):
     name = Column(String, nullable=False, default="DefaultProductName")
     price = Column(Integer, nullable=False, default=0)
     amount = Column(Integer, nullable=False, default=0)
+    reserved = Column(Integer, nullable=False, default=0)
     description = Column(String, nullable=False, default="DefaultDescription")
 
 

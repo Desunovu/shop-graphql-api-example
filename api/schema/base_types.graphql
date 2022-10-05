@@ -16,6 +16,7 @@ type Product {
     name: String
     price: Int
     amount: Int
+    reserved: Int
     description: String
     categories: [Category!]
     images: [Image!]

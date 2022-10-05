@@ -8,14 +8,27 @@ from api.extras import token_required, create_result, create_error, Errors, Role
 
 @token_required()
 def resolve_create_order(_obj, info, **kwargs):
-    # Получить недоступные к заказу строки и разрешенное количество, чтобы исправить их и вернуть ошибку
-    update_stmt = update(CartLine.__table__)\
+    # Выражение для исправления корзины в соответствии с доступностью товаров
+    update_cartlines_stmt = update(CartLine.__table__)\
         .values(amount=Product.__table__.c.amount)\
         .where(CartLine.__table__.c.user_id == info.context.current_user.id)\
         .where(CartLine.__table__.c.product_id == Product.__table__.c.id)\
-        .where(CartLine.__table__.c.amount > Product.__table__.c.amount)
-    update_result = db.session.execute(update_stmt)
-    db.session.commit()
+        .where(CartLine.__table__.c.amount > Product.__table__.c.amount)\
+        .execution_options(synchronize_session="fetch")
+
+    # Выражение для переноса товаров из доступных в зарезервированные
+    update_products_stmt = update(Product.__table__)\
+        .values(
+            amount=Product.__table__.c.amount - OrderLine.__table__.c.amount,
+            reserved=Product.__table__.c.reserved + OrderLine.__table__.c.amount
+        )\
+        .where(OrderLine.__table__.c.user_id == info.context.current_user.id)\
+        .where(OrderLine.__table__.c.product_id == Product.__table__.c.id) \
+        .execution_options(synchronize_session="fetch")
+
+    # Получить недоступные к заказу строки и разрешенное количество, чтобы исправить их и вернуть ошибку
+    update_result = db.session.execute(update_cartlines_stmt)
+    db.session.commit()  # TODO протестировать необходиомсть
     if update_result.rowcount:
         return create_result(status=False, errors=[Errors.NOT_ENOUGH_PRODUCT])
 
@@ -36,12 +49,13 @@ def resolve_create_order(_obj, info, **kwargs):
     db.session.add(new_order)
     db.session.commit()
 
-    # Перенос в таблицу orderlines
+    # Перенос в таблицу orderlines, очистка корзины, резервация, уменьшение доступного количества товара
     # Откат записи в orders и orderlines если произошла ошибка переноса
     try:
-        orderlines = db.session.add_all(
+        db.session.add_all(
             [OrderLine(**cartline.to_dict(), order_id=new_order.id) for cartline in cartlines]
         )
+        db.session.execute(update_products_stmt)
         cartlines.delete()
     except Exception as ex:
         print(ex)

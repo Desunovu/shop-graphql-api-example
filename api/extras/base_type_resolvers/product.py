@@ -21,6 +21,10 @@ def resolve_product_amount(product_obj, _info):
     return product_obj.amount
 
 
+def resolve_product_reserved(product_obj, _info):
+    return product_obj.reserved
+
+
 def resolve_product_description(product_obj, _info):
     return product_obj.description
 
