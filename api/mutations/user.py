@@ -2,10 +2,11 @@ from werkzeug.security import generate_password_hash
 from ariadne import convert_kwargs_to_snake_case
 
 from api import db
-from api.extras import create_result, Errors, Roles
+from api.extras import token_required, create_result, Errors, Roles
 from api.models import User
 
 
+@token_required()
 @convert_kwargs_to_snake_case
 def resolve_update_user(obj, info, **kwargs):
     user_id = info.context.current_user.id
