@@ -26,3 +26,7 @@ def resolve_user_last_name(user_obj, _info):
 
 def resolve_user_address(user_obj, _info):
     return user_obj.address
+
+
+def resolve_user_phone_number(user_obj, _info):
+    return user_obj.phone_number

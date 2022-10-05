@@ -10,6 +10,7 @@ user_type.set_field("avatarUrl", user.resolve_user_avatar_url)
 user_type.set_field("firstName", user.resolve_user_first_name)
 user_type.set_field("lastName", user.resolve_user_last_name)
 user_type.set_field("address", user.resolve_user_address)
+user_type.set_field("phoneNumber", user.resolve_user_phone_number)
 
 product_type = ObjectType("Product")
 product_type.set_field("id", product.resolve_product_id)

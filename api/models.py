@@ -28,6 +28,7 @@ class User(BaseMixin):
     first_name = Column(String)
     last_name = Column(String)
     address = Column(String)
+    phone_number = Column(String)
 
 
 class Product(BaseMixin):

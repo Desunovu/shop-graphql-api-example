@@ -6,6 +6,7 @@ type Mutation {
         firstName: String
         lastName: String
         address: String
+        phoneNumber: String = "88005553535"
     ): UserResult!
 
     """Запрос для изменения пользователя (по id для администратора)"""
@@ -16,6 +17,7 @@ type Mutation {
         firstName: String
         lastName: String
         address: String
+        phoneNumber: String = "88005553535"
     ): UserResult!
 
     """Запрос для добавления товара"""
