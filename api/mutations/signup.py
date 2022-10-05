@@ -14,4 +14,4 @@ def resolve_create_user(obj, info, **kwargs):
     user.password = generate_password_hash(kwargs["password"])
     db.session.add(user)
     db.session.commit()
-    return create_result(user=user.to_dict())
+    return create_result(user=user)
