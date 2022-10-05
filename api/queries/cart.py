@@ -12,11 +12,11 @@ def resolve_get_cart(_obj, info, **kwargs):
         Для покупателя указывать id запрещено
     """
     user_id = info.context.current_user.id
-    if "id" in kwargs:
+    if "userId" in kwargs:
         # Запрет пользователю делать запрос с аргументом
         if info.context.current_user.role != Roles.ADMIN:
             return create_result(status=False, errors=[Errors.ACCESS_DENIED])
-        user_id = kwargs["id"]
+        user_id = kwargs["userId"]
 
     cartline_and_product_list = db.session.query(CartLine, Product).\
         join(Product).join(User).filter(User.id == user_id).all()
