@@ -1,5 +1,5 @@
 from api import db
-from api.extras.common_constants import Roles
+from api.extras.common_constants import Roles, OrderStatus
 from sqlalchemy import Column, Integer, String, Boolean, Date, ForeignKey
 
 
@@ -88,9 +88,10 @@ class Order(BaseMixin):
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="SET NULL"))
-    date = Column(Date, nullable=False)
+    creation_date = Column(Date, nullable=False)
+    completion_date = Column(Date)
     delivery_address = Column(String, nullable=False)
-    completed = Column(Boolean, nullable=False, default=False)
+    status = Column(String, nullable=False, default=OrderStatus.PROCESSING)
 
 
 class OrderLine(BaseMixin):

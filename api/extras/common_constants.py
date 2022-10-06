@@ -1,6 +1,13 @@
 from .creation_utils import create_error
 
 
+class OrderStatus:
+    PROCESSING = "PROCESSING"
+    SHIPPING = "SHIPPING"
+    DONE = "DONE"
+    CANCELLED = "CANCELLED"
+
+
 class Roles:
     ADMIN = "Admin"
     CUSTOMER = "Customer"
@@ -20,6 +27,7 @@ class Errors:
     NOT_ENOUGH_PRODUCT = create_error(10, "Некоторые товары недоступны для заказа в количестве, указанном в корзине. "
                                           "Проверьте отредактированную корзину и выполните заказ еще раз.")
     ORDER_CREATION_EXCEPTION = create_error(11, "Ошибка при переносе товара в заказ")
+    WRONG_ORDER_STATUS = create_error(12, "Нельзя применить статус к заказу")
 
 
 class UnauthorizedError(Exception):

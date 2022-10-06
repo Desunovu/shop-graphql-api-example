@@ -68,8 +68,9 @@ type OrderLine {
 type Order {
     id: Int
     userId: Int
-    date: Date
+    creationDate: Date
+    completionDate: Date
     deliveryAddress: String
-    completed: Boolean
+    status: String
     orderLines: [OrderLine!]
 }

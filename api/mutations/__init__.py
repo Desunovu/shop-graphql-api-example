@@ -28,4 +28,4 @@ mutation.set_field("removeReview", review.resolve_remove_review)
 
 # Order
 mutation.set_field("createOrder", order.resolve_create_order)
-mutation.set_field("closeOrder", order.resolve_close_order)
+mutation.set_field("updateOrderStatus", order.resolve_update_order_status)

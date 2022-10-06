@@ -85,7 +85,10 @@ type Mutation {
         deliveryAddress: String
     ): OrderResult!
 
-    """Закрыть заказ [Администратор]"""
-    closeOrder(id: Int): Result!
+    """Изменить статус заказа [Администратор]"""
+    updateOrderStatus(
+        id: Int! = 1
+        orderStatus: OrderStatusEnum! = PROCESSING
+    ): OrderResult!
 }
 

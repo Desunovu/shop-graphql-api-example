@@ -10,17 +10,21 @@ def resolve_order_user_id(order_obj, _info):
     return order_obj.user_id
 
 
-def resolve_order_date(order_obj, _info):
+def resolve_order_creation_date(order_obj, _info):
     # возвращает datetime.date, преобразуется к строке в serializer в schema.py
-    return order_obj.date
+    return order_obj.creation_date
+
+
+def resolve_order_completion_date(order_obj, _info):
+    return order_obj.completion_date
 
 
 def resolve_order_delivery_address(order_obj, _info):
     return order_obj.delivery_address
 
 
-def resolve_order_completed(order_obj, _info):
-    return order_obj.completed
+def resolve_order_status(order_obj, _info):
+    return order_obj.status
 
 
 def resolve_order_lines(order_obj, _info):
