@@ -1,6 +1,6 @@
 from ariadne import ObjectType
 
-from . import admin, cart, signup, review, order, user
+from . import admin, cart, signup, review, order, user, favorite
 
 mutation = ObjectType("Mutation")
 
@@ -29,3 +29,6 @@ mutation.set_field("removeReview", review.resolve_remove_review)
 # Order
 mutation.set_field("createOrder", order.resolve_create_order)
 mutation.set_field("updateOrderStatus", order.resolve_update_order_status)
+
+# Product/Favorite
+mutation.set_field("addProductToFavorites", favorite.resolve_product_add_to_favorites)

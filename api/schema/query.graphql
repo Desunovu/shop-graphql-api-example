@@ -26,4 +26,7 @@ type Query {
     """Получить все заказы (по userId для админа)"""
     getOrders(userId: Int): OrdersResult!
 
+    """Получить избранные товары"""
+    getFavoriteProducts: ProductsResult!
+
 }

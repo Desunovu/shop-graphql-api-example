@@ -101,3 +101,11 @@ class OrderLine(BaseMixin):
     product_id = Column(Integer, ForeignKey("products.id", ondelete="SET NULL"), primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
     amount = Column(Integer, nullable=False)
+
+
+class FavoriteProduct(BaseMixin):
+    __tablename__ = "favorite_products"
+
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)
+    product_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"), primary_key=True)
+    addition_date = Column(String)

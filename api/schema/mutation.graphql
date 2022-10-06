@@ -90,5 +90,8 @@ type Mutation {
         id: Int! = 1
         orderStatus: OrderStatusEnum! = PROCESSING
     ): OrderResult!
+
+    """Добавить товар в избраные"""
+    addProductToFavorites(product_id: Int): ProductResult
 }
 
