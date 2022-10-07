@@ -1,9 +1,9 @@
-import os
+from ariadne import convert_kwargs_to_snake_case
 
 from api import app, db
 from api.extras import token_required, create_result, Roles, Errors
-from api.extras.resolver_utils import add_product_images, delete_product_images, add_product_categories, remove_product_categories
-from api.models import Product, User, Category
+from api.extras.resolver_utils import add_product_images, delete_product_images, add_product_categories, remove_product_categories, add_product_characteristics, remove_product_characteristics
+from api.models import Product, User, Category, Characteristic, ProductCharacteristic
 
 
 @token_required(allowed_roles=[Roles.ADMIN])
@@ -28,6 +28,15 @@ def resolve_add_product(_obj, _info, **kwargs):
         status = add_product_categories(category_ids=kwargs.get("categoryIds"), product_id=product.id)
         if not status:
             errors.append(Errors.CATEGORIES_NOT_SET)
+
+    # Добавление незаполненных характеристик:
+    if "characteristicIds" in kwargs:
+        status = add_product_characteristics(
+            product_id=product.id,
+            characteristics_ids=kwargs["characteristicIds"]
+        )
+        if not status:
+            errors.append(Errors.CHARACTERISTICS_NOT_SET)
 
     return create_result(status=self_status, errors=errors, product=product)
 
@@ -75,7 +84,42 @@ def resolve_update_product(_obj, _info, **kwargs):
         if not status:
             errors.append(Errors.CATEGORIES_NOT_REMOVED)
 
+    # Добавление/удаление характеристик
+    if "addCharacteristicByIds" in kwargs:
+        status = add_product_characteristics(product_id=product.id, characteristic_ids=kwargs["addCharacteristicByIds"])
+        if not status:
+            errors.append(Errors.CHARACTERISTICS_NOT_SET)
+    if "removeCharacteristicByIds" in kwargs:
+        status = remove_product_characteristics(product_id=product.id,
+                                                characteristic_ids=kwargs["removeCharacteristicByIds"])
+        if not status:
+            errors.append(Errors.CHARACTERISTICS_NOT_REMOVED)
+    if "removeAllCharacteristics" in kwargs:
+        status = remove_product_characteristics(product_id=product.id,
+                                                remove_all=True)
+        if not status:
+            errors.append(Errors.CHARACTERISTICS_NOT_REMOVED)
+
     return create_result(errors=errors, product=product)
+
+
+@token_required(allowed_roles=[Roles.ADMIN])
+@convert_kwargs_to_snake_case
+def resolve_set_product_characteristic_value(_obj, _info, **kwargs):
+    query_result = db.session.query(Product, ProductCharacteristic)\
+        .join(ProductCharacteristic, ProductCharacteristic.product_id == Product.id)\
+        .filter(Product.id == kwargs["product_id"])\
+        .filter(ProductCharacteristic.characteristic_id == kwargs["characteristic_id"])\
+        .first()
+
+    if not query_result:
+        return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])
+
+    product, product_characteristic = query_result
+    product_characteristic.value = kwargs["value"]
+    db.session.commit()
+
+    return create_result(product=product)
 
 
 @token_required(allowed_roles=[Roles.ADMIN])
@@ -149,3 +193,24 @@ def resolve_remove_category(_obj, _info, **kwargs):
     db.session.delete(category)
     db.session.commit()
     return create_result()
+
+
+@token_required(allowed_roles=[Roles.ADMIN])
+@convert_kwargs_to_snake_case
+def resolve_create_characteristic(_obj, _info, **kwargs):
+    characteristic = Characteristic(name=kwargs["name"])
+    db.session.add(characteristic)
+    db.session.commit()
+    return create_result(characteristic=characteristic)
+
+
+@token_required(allowed_roles=[Roles.ADMIN])
+@convert_kwargs_to_snake_case
+def resolve_delete_characteristic(_obj, _info, **kwargs):
+    characteristic = db.session.query(Characteristic).get(kwargs["id"])
+    if not characteristic:
+        return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])
+
+    db.session.delete(characteristic)
+    db.session.commit()
+    return create_result(characteristic=characteristic)

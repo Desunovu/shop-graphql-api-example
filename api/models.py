@@ -109,3 +109,18 @@ class FavoriteProduct(BaseMixin):
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)
     product_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"), primary_key=True)
     addition_date = Column(String)
+
+
+class Characteristic(BaseMixin):
+    __tablename__ = "characteristics"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+
+
+class ProductCharacteristic(BaseMixin):
+    __tablename__ = "product_characteristics"
+
+    product_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"), primary_key=True)
+    characteristic_id = Column(Integer, ForeignKey("characteristics.id", ondelete="CASCADE"), primary_key=True)
+    value = Column(String)

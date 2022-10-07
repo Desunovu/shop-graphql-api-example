@@ -1,6 +1,6 @@
 from ariadne import ObjectType
 
-from . import cart, product, signin, user, category, order, favorite
+from . import cart, product, signin, user, category, order, favorite, characteristic
 
 query = ObjectType("Query")
 
@@ -24,3 +24,6 @@ query.set_field("getCategories", category.resolve_get_categories)
 
 # Order
 query.set_field("getOrders", order.resolve_get_orders)
+
+# Characteristic
+query.set_field("getCharacteristics", characteristic.resolve_get_characteristics)

@@ -1,6 +1,6 @@
 from ariadne import ObjectType
 
-from . import user, product, cartline, category, review, order, orderline
+from . import user, product, cartline, category, review, order, orderline, characteristic
 
 user_type = ObjectType("User")
 user_type.set_field("id", user.resolve_user_id)
@@ -22,6 +22,7 @@ product_type.set_field("description", product.resolve_product_description)
 product_type.set_field("images", product.resolve_product_images)
 product_type.set_field("categories", product.resolve_product_categories)
 product_type.set_field("reviews", product.resolve_product_reviews)
+product_type.set_field("characteristics", product.resolve_product_characteristics)
 
 cartline_type = ObjectType("CartLine")
 cartline_type.set_field("product", cartline.resolve_cartine_product)
@@ -50,3 +51,11 @@ order_type.set_field("orderLines", order.resolve_order_lines)
 orderline_type = ObjectType("OrderLine")
 orderline_type.set_field("amount", orderline.resolve_orderline_amount)
 orderline_type.set_field("product", orderline.resolve_orderline_product)
+
+characteristic_type = ObjectType("Characteristic")
+characteristic_type.set_field("id", characteristic.resolve_characteristic_id)
+characteristic_type.set_field("name", characteristic.resolve_characteristic_name)
+
+product_characteristic_type = ObjectType("ProductCharacteristic")
+product_characteristic_type.set_field("characteristicName", characteristic.resolve_product_characteristic_name)
+product_characteristic_type.set_field("value", characteristic.resolve_product_characteristic_value)

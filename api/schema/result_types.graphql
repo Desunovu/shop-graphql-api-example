@@ -75,3 +75,9 @@ type OrdersResult {
     errors: [Error!]!
     orders: [Order!]
 }
+
+type CharacteristicResult {
+    status: Boolean!
+    errors: [Error!]!
+    characteristic: Characteristic
+}

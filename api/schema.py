@@ -4,7 +4,7 @@ from ariadne import load_schema_from_path, make_executable_schema, upload_scalar
 
 from api.mutations import mutation
 from api.queries import query
-from api.extras.base_type_resolvers import user_type, product_type, cartline_type, review_type, order_type, orderline_type
+from api.extras.base_type_resolvers import user_type, product_type, cartline_type, review_type, order_type, orderline_type, characteristic_type, product_characteristic_type
 
 # Тип Date
 date_scalar = ScalarType("Date")
@@ -21,5 +21,18 @@ type_defs = load_schema_from_path(
 # Создание объекта схемы
 schema = make_executable_schema(
     type_defs,
-    [query, mutation, user_type, product_type, cartline_type, review_type, order_type, orderline_type, upload_scalar, date_scalar]
+    [
+        query,
+        mutation,
+        user_type,
+        product_type,
+        cartline_type,
+        review_type,
+        order_type,
+        orderline_type,
+        characteristic_type,
+        product_characteristic_type,
+        upload_scalar,
+        date_scalar
+    ]
 )

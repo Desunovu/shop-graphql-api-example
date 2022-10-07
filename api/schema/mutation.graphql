@@ -27,7 +27,8 @@ type Mutation {
         amount: Int!
         description: String!
         images: [Upload!]
-        categoryIds: [Int!]!
+        categoryIds: [Int!]
+        characteristicIds: [Int!]
     ): ProductResult!
 
     """Запрос для изменения товара"""
@@ -43,6 +44,16 @@ type Mutation {
         addCategoriesById: [Int!]
         removeCategoriesById: [Int!]
         removeAllCategories: Boolean
+        addCharacteristicByIds: [Int!]
+        removeCharacteristicByIds: [Int!]
+        removeAllCharacteristics: Boolean
+    ): ProductResult!
+
+    """Запрос для установки значения характеристики [Администратор]"""
+    setProductCharacteristicValue(
+        productId: Int!
+        characteristicId: Int!
+        value: String! = "Не указано"
     ): ProductResult!
 
     """Запрос для удаления товара"""
@@ -93,5 +104,11 @@ type Mutation {
 
     """Добавить товар в избраные"""
     addProductToFavorites(product_id: Int): ProductResult
+
+    """Создание характеристики [Администратор]"""
+    createCharacteristic(name: String!): CharacteristicResult!
+
+    """Удаление характеристики [Арминистратор]"""
+    deleteCharacteristic(id: Int!): CharacteristicResult!
 }
 

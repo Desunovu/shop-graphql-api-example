@@ -7,11 +7,14 @@ mutation = ObjectType("Mutation")
 # Admin
 mutation.set_field("addProduct", admin.resolve_add_product)
 mutation.set_field("updateProduct", admin.resolve_update_product)
+mutation.set_field("setProductCharacteristicValue", admin.resolve_set_product_characteristic_value)
 mutation.set_field("deleteProduct", admin.resolve_delete_product)
 mutation.set_field("assignAdmin", admin.resolve_assign_admin)
 mutation.set_field("deleteUser", admin.resolve_delete_user)
 mutation.set_field("addCategory", admin.resolve_add_category)
 mutation.set_field("removeCategory", admin.resolve_remove_category)
+mutation.set_field("createCharacteristic", admin.resolve_create_characteristic)
+mutation.set_field("deleteCharacteristic", admin.resolve_delete_characteristic)
 
 # Signup/User
 mutation.set_field("createUser", signup.resolve_create_user)

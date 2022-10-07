@@ -1,9 +1,7 @@
-import os
 from minio.deleteobjects import DeleteObject
 
-import api.models
 from api import app, db, minio_client
-from api.models import ProductImage, ProductCategory
+from api.models import ProductImage, ProductCategory, ProductCharacteristic
 
 bucket_name = app.config.get("PRODUCTS_BUCKET")
 
@@ -94,3 +92,42 @@ def get_cart_total(cartline_and_product_list=None):
     total = sum([cartline.amount * product.price for cartline, product in cartline_and_product_list])
 
     return total
+
+
+def add_product_characteristics(product_id, characteristic_ids=None):
+    try:
+        product_characteristics = [
+            ProductCharacteristic(
+                product_id=product_id,
+                characteristic_id=characteristic_id,
+                value=None
+            )
+            for characteristic_id
+            in characteristic_ids
+        ]
+
+        db.session.add_all(product_characteristics)
+        db.session.commit()
+        return True
+    except Exception:
+        db.session.rollback()
+        return False
+
+
+def remove_product_characteristics(product_id, characteristic_ids=None, remove_all=False):
+    # Выражение для запроса
+    if remove_all:
+        stmt = db.session.query(ProductCharacteristic).filter(ProductCharacteristic.product_id == product_id)
+    else:
+        stmt = db.session.query(ProductCharacteristic).filter(
+            ProductCharacteristic.characteristic_id.in_(characteristic_ids)
+        )
+
+    # Удаление записей в БД
+    try:
+        stmt.delete()
+        db.session.commit()
+        return True
+    except Exception:
+        db.session.rollback()
+        return False

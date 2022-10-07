@@ -29,4 +29,6 @@ type Query {
     """Получить избранные товары"""
     getFavoriteProducts: ProductsResult!
 
+    """Получить список доступных характеристик [Администратор]"""
+    getCharacteristics: [Characteristic!]!
 }

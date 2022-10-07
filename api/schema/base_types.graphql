@@ -21,6 +21,7 @@ type Product {
     categories: [Category!]
     images: [Image!]
     reviews: [Review!]
+    characteristics: [ProductCharacteristic!]
 }
 
 """Строка с товаром в корзине"""
@@ -73,4 +74,16 @@ type Order {
     deliveryAddress: String
     status: String
     orderLines: [OrderLine!]
+}
+
+"""Характеристика"""
+type Characteristic {
+    id: Int
+    name: String
+}
+
+"""Значение характеристики у товара"""
+type ProductCharacteristic {
+    characteristicName: String
+    value: String
 }

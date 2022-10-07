@@ -2,7 +2,7 @@
 
 from api.extras import create_simple_result
 from api import db
-from api.models import Category, ProductImage, ProductCategory, Review
+from api.models import Category, ProductImage, ProductCategory, Review, ProductCharacteristic, Characteristic
 
 
 def resolve_product_id(product_obj, _info):
@@ -36,9 +36,9 @@ def resolve_product_categories(product_obj, _info):
 
     # Создание словаря согласно определению типа Category в схеме
     return [create_simple_result(
-                id=category.id,
-                name=category.name
-            ) for category in categories]
+        id=category.id,
+        name=category.name
+    ) for category in categories]
 
 
 def resolve_product_images(product_obj, _info):
@@ -48,14 +48,23 @@ def resolve_product_images(product_obj, _info):
 
     # Создание словаря согласно определению типа Image в схеме
     return [create_simple_result(
-                id=image.id,
-                filename=image.image_name,
-                url="TEST FUNC",
-                isPreview=image.is_preview
-            ) for image in images]
+        id=image.id,
+        filename=image.image_name,
+        url="TEST FUNC",
+        isPreview=image.is_preview
+    ) for image in images]
 
 
 def resolve_product_reviews(product_obj, _info):
     reviews = db.session.query(Review).filter(Review.product_id == product_obj.id).all()
 
     return reviews
+
+
+def resolve_product_characteristics(product_obj, _info):
+    # Список кортежей вида (ProductCharacteristic, Characteristic)
+    query_result = db.session.query(ProductCharacteristic, Characteristic)\
+        .join(Characteristic, Characteristic.id == ProductCharacteristic.characteristic_id)\
+        .filter(ProductCharacteristic.product_id == product_obj.id).all()
+
+    return query_result
