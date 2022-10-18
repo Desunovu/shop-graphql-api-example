@@ -11,7 +11,7 @@ def resolve_characteristic_name(characterictic_obj, _info):
 
 
 # OBJ: (ProductCharacteristic, Characteristic)
-def resolve_product_characteristic_name(product_characteristic_objects, _info):
+def resolve_product_characteristic_name(product_characteristic_objects: tuple[ProductCharacteristic, Characteristic], _info):
     return product_characteristic_objects[1].name
 
 
