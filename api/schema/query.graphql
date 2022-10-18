@@ -9,22 +9,35 @@ type Query {
     getUser(id: Int): UserResult!
 
     """Получить пользователей"""
-    getUsers: UsersResult!
+    getUsers(
+        pagination: Pagination
+        sort: SortGetUsers
+    ): UsersResult!
 
     "Получить товар по ID"
     getProduct(id: Int!): ProductResult!
 
     "Получить товары"
-    getProducts(input: GetProductsInput): ProductsResult!
+    getProducts(
+        pagination: Pagination
+        sort: SortGetProducts
+    ): ProductsResult!
 
     """Получить корзину (по user_id для администратора)"""
     getCart(userId: Int): CartResult!
 
     """Получить список категорий"""
-    getCategories: CategoriesResult!
+    getCategories(
+        pagination: Pagination
+        sort: SortGetProducts
+    ): CategoriesResult!
 
     """Получить все заказы (по userId для админа)"""
-    getOrders(userId: Int): OrdersResult!
+    getOrders(
+        userId: Int
+        pagination: Pagination
+        sort: SortGetOrders
+    ): OrdersResult!
 
     """Получить избранные товары"""
     getFavoriteProducts: ProductsResult!

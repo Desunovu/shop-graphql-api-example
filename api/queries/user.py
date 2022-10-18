@@ -1,7 +1,8 @@
-from flask import session
+from ariadne import convert_kwargs_to_snake_case
 
 from api import db
 from api.extras import create_result, token_required, Errors, Roles
+from api.extras.resolver_utils import query_sort, query_pagination
 from api.models import User
 
 
@@ -23,7 +24,11 @@ def resolve_get_user(_obj, _info, **kwargs):
 
 
 @token_required(allowed_roles=[Roles.ADMIN])
+@convert_kwargs_to_snake_case
 def resolve_get_users(_obj, _info, **kwargs):
-    users = db.session.query(User).all()
+    query = db.session.query(User)
+    query = query_sort(query=query, resolver_args=kwargs)
+    query = query_pagination(query=query, resolver_args=kwargs)
+    users = query.all()
 
     return create_result(users=[user for user in users])

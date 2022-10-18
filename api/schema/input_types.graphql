@@ -1,7 +1,26 @@
-input GetProductsFilters {
-    categoryId: Int
+# Пагинация
+input Pagination {
+    offset: Int = 0
+    limit: Int = 10
 }
 
-input GetProductsInput {
-    filter: GetProductsFilters
+# Сортировки
+input SortGetProducts {
+    field: ProductSortableField = price
+    order: SortOrder = ASC
+}
+
+input SortGetUsers {
+    field: UserSortableField = id
+    order: SortOrder = ASC
+}
+
+input SortGetCategories {
+    field: CategorySortableField = name
+    order: SortOrder = ASC
+}
+
+input SortGetOrders {
+    field: OrderSortableField = status
+    order: SortOrder = DESC
 }

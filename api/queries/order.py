@@ -1,9 +1,13 @@
+from ariadne import convert_kwargs_to_snake_case
+
 from api import db
-from api.models import CartLine, OrderLine, Order, User, Product
-from api.extras import token_required, create_result, create_error, Errors, Roles, NotEnoughProduct
+from api.extras import token_required, create_result, Errors, Roles
+from api.extras.resolver_utils import query_sort, query_pagination
+from api.models import Order, User
 
 
 @token_required()
+@convert_kwargs_to_snake_case
 def resolve_get_orders(_obj, info, **kwargs):
     user_id = info.context.current_user.id
 
@@ -15,6 +19,9 @@ def resolve_get_orders(_obj, info, **kwargs):
         if not db.session.query(User).get(user_id):
             return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])
 
-    orders = db.session.query(Order).filter(Order.user_id == user_id).all()
+    query = db.session.query(Order).filter(Order.user_id == user_id)
+    query = query_sort(query=query, resolver_args=kwargs)
+    query = query_pagination(query=query, resolver_args=kwargs)
+    orders = query.all()
 
     return create_result(orders=orders)

@@ -1,6 +1,9 @@
+from ariadne import convert_kwargs_to_snake_case
+
 from api import db
 from api.extras import token_required, create_result, Errors
-from api.models import Product, ProductCategory
+from api.extras.resolver_utils import query_pagination, query_sort
+from api.models import Product
 
 
 @token_required()
@@ -13,19 +16,13 @@ def resolve_get_product(_obj, _info, **kwargs):
 
 
 @token_required()
+@convert_kwargs_to_snake_case
 def resolve_get_products(_obj, _info, **kwargs):
     # Выражение
-    stmt = db.session.query(Product)
+    query = db.session.query(Product)
+    query = query_sort(query=query, resolver_args=kwargs)
+    query = query_pagination(query=query, resolver_args=kwargs)
 
-    # Присутствует фильтр по категории
-    try:
-        stmt = stmt.join(ProductCategory, Product.id == ProductCategory.product_id).filter(
-            ProductCategory.category_id == kwargs["input"]["filter"]["categoryId"]
-        )
-    except KeyError:
-        pass
+    products = query.all()
 
-    # Поиск в БД
-    products = stmt.all()
-
-    return create_result(products=[product for product in products])
+    return create_result(products=products)

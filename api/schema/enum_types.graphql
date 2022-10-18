@@ -4,3 +4,31 @@ enum OrderStatusEnum {
     DONE
     CANCELLED
 }
+
+enum SortOrder {
+    ASC
+    DESC
+}
+
+enum ProductSortableField {
+    id
+    name
+    price
+    amount
+}
+
+enum UserSortableField {
+    id
+    lastName
+}
+
+enum CategorySortableField {
+    id
+    name
+}
+
+enum OrderSortableField {
+    id
+    creationDate
+    status
+}

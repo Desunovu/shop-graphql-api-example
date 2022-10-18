@@ -1,9 +1,31 @@
 from minio.deleteobjects import DeleteObject
+from sqlalchemy import desc
+from ariadne import convert_camel_case_to_snake
 
 from api import app, db, minio_client
 from api.models import ProductImage, ProductCategory, ProductCharacteristic
 
 bucket_name = app.config.get("PRODUCTS_BUCKET")
+
+
+def query_pagination(query, resolver_args):
+    if "pagination" not in resolver_args:
+        return query
+
+    offset = resolver_args["pagination"]["offset"]
+    limit = resolver_args["pagination"]["limit"]
+    return query.limit(limit).offset(offset)
+
+
+def query_sort(query, resolver_args):
+    if "sort" not in resolver_args:
+        return query
+
+    field = convert_camel_case_to_snake(resolver_args["sort"]["field"])
+    order = resolver_args["sort"]["order"]
+    if order == "DESC":
+        return query.order_by(desc(field))
+    return query.order_by(field)
 
 
 def add_product_images(images: dict, product_id: int):
@@ -60,7 +82,8 @@ def delete_product_images(product_id: int, images_id=None, delete_all=False):
 
 def add_product_categories(product_id, category_ids=None):
     try:
-        product_categories = [ProductCategory(product_id=product_id, category_id=category_id) for category_id in category_ids]
+        product_categories = [ProductCategory(product_id=product_id, category_id=category_id) for category_id in
+                              category_ids]
         db.session.bulk_save_objects(product_categories)
         db.session.commit()
         return True
@@ -69,7 +92,7 @@ def add_product_categories(product_id, category_ids=None):
         return False
 
 
-def remove_product_categories(product_id, category_ids=None, remove_all=False,):
+def remove_product_categories(product_id, category_ids=None, remove_all=False, ):
     # Выражение для запроса
     if remove_all:
         stmt = db.session.query(ProductCategory).filter(ProductCategory.product_id == product_id)
