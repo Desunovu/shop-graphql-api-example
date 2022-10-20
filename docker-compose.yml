@@ -1,0 +1,18 @@
+version: '3'
+services:
+  flask:
+    build: .
+    container_name: backend-flask
+    environment:
+      - FLASK_APP=api
+      - PYTHONUNBUFFERED=True
+    restart: on-failure
+    ports:
+      - "5000:5000"
+    command: flask run
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
