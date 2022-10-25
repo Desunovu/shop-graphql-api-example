@@ -1,0 +1,7 @@
+*
+!api
+!migrations
+!.env
+!config.py
+!requirements.txt
+!runner.py
