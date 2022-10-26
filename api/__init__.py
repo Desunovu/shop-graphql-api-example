@@ -12,13 +12,16 @@ app = Flask(__name__, instance_relative_config=True)
 app.config.from_object(os.environ.get("FLASK_CONFIG"))
 app.secret_key = os.environ.get("APP_SECRET_KEY")
 
+# Database
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
 # minio_client = Minio(app)
 minio_client = Minio(endpoint=app.config.get("MINIO_ENDPOINT"),
                      access_key=app.config.get("MINIO_ACCESS_KEY"),
                      secret_key=app.config.get("MINIO_SECRET_KEY"),
                      secure=False)
 
+# Подключение роутов, моделей, создание таблиц
 from api.routes import *
 from api.models import *  # Требуется для работы alembic
