@@ -1,7 +1,4 @@
-*
-!api
-!migrations
-!.env
-!config.py
-!requirements.txt
-!runner.py
+.gitignore
+docker-compose.yml
+Dockerfile
+README.md
