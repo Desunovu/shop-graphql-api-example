@@ -1,3 +1,5 @@
+import os
+
 from werkzeug.security import generate_password_hash
 from ariadne import convert_kwargs_to_snake_case
 
@@ -12,8 +14,10 @@ def resolve_create_user(obj, info, **kwargs):
     if user:
         return create_result(status=False, errors=[Errors.USER_ALREADY_EXISTS])
 
-    # Задать поля присутствующие в модели из аргументов, в поле пароля поместить его хэш
+    # Создать экземляр User, задать роль в соответствии с конфигом, в поле пароля поместить его хэш
     user = User(**kwargs, role=Roles.CUSTOMER)
+    if os.environ.get("FLASK_CONFIG") == "config.DevelopmentConfig":
+        user.role = Roles.ADMIN
     user.password = generate_password_hash(kwargs["password"])
     db.session.add(user)
     db.session.commit()
